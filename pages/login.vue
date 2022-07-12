@@ -1,30 +1,43 @@
 <template>
-    <body>
-        <main>
-            <div class="container">
-                <div class="row content">
-                    <div class="col-md-6 mb-3">
-                        <img src="../static/teacher.svg" class="img-fluid" alt="Teacher Image">
-                    </div>
-                    <div class="col-md-6">
-                      <h3 class="signin-text mb-3"> Bem vindo(a), Professor(a)!</h3>
-                      <form>
-                        <div class="form-group">
-                          <label for="email">Endereço de Email</label>
-                          <input v-model="credentials.email" type="email" name="email" class="form-control">
-                        </div>
-                        <div class="form-group">
-                          <label for="password">Senha</label>
-                          <input v-model="credentials.password" type="password" name="password" class="form-control">
-                        </div>
-                        <div class="btn btn-class" @click="login()">Entrar</div>
-                      </form>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </body>
-    
+  <body>
+    <main>
+      <div class="container">
+        <div class="row content">
+          <div class="col-md-6 mb-3">
+            <img
+              src="../static/teacher.svg"
+              class="img-fluid"
+              alt="Teacher Image"
+            />
+          </div>
+          <div class="col-md-6">
+            <h3 class="signin-text mb-3">Bem vindo(a), Professor(a)!</h3>
+            <form>
+              <div class="form-group">
+                <label for="email">Endereço de Email</label>
+                <input
+                  v-model="credentials.email"
+                  type="email"
+                  name="email"
+                  class="form-control"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Senha</label>
+                <input
+                  v-model="credentials.password"
+                  type="password"
+                  name="password"
+                  class="form-control"
+                />
+              </div>
+              <div class="btn btn-class" @click="login()">Entrar</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
 </template>
 
 <script>
@@ -33,37 +46,33 @@ export default {
   data() {
     return {
       credentials: {
-        email: "",
-        password: "",
-      }
+        email: '',
+        password: '',
+      },
     }
   },
-  
+
   methods: {
     login() {
-      this.$auth.loginWith("local", 
-      {data: this.credentials})
-      .then(
-        ()=>{
+      this.$auth
+        .loginWith('local', { data: this.credentials })
+        .then(() => {
           console.log('Success!')
-        }
-      )
-      .catch(
-        err=>{
-          console.log('Err!') 
-          console.log(err)
-        }
-      )
+        })
+        .catch((err) => {
+          console.error('Err!')
+          console.error(err)
+        })
     },
-  }
+  },
 }
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: #FFFFFF;
+  font-family: 'Poppins', sans-serif;
+  background-image: linear-gradient(315deg, #00b712 0%, #5aff15 74%);
 }
 .content {
   margin: 8%;
@@ -91,7 +100,6 @@ body {
   background-color: #fff;
   background-clip: padding-box;
 }
-
 .form-control:focus {
   color: #495057;
   background-color: #fff;
@@ -110,5 +118,4 @@ body {
   background-color: #00ac96;
   color: #fff;
 }
-
 </style>
