@@ -1,121 +1,244 @@
 <template>
-  <body>
-    <main>
-      <div class="container">
-        <div class="row content">
-          <div class="col-md-6 mb-3">
-            <img
-              src="../static/teacher.svg"
-              class="img-fluid"
-              alt="Teacher Image"
-            />
-          </div>
-          <div class="col-md-6">
-            <h3 class="signin-text mb-3">Bem vindo(a), Professor(a)!</h3>
-            <form>
-              <div class="form-group">
-                <label for="email">Endereço de Email</label>
-                <input
-                  v-model="credentials.email"
-                  type="email"
-                  name="email"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Senha</label>
-                <input
-                  v-model="credentials.password"
-                  type="password"
-                  name="password"
-                  class="form-control"
-                />
-              </div>
-              <div class="btn btn-class" @click="login()">Entrar</div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </main>
-  </body>
+    <section>
+        <header>
+            <ul id="nav-bar">
+                <nuxt-link id="start" to="/">
+                    <li>Início</li>
+                </nuxt-link>
+                <nuxt-link id="about" to="/">
+                    <li>Sobre</li>
+                </nuxt-link>
+                <nuxt-link id="contact" to="/">
+                    <li>Contato</li>
+                </nuxt-link>
+                <nuxt-link v-if="userAccount.type == 'teacher'" id="student" to="/student">
+                    <li>Sou Aluno</li>
+                </nuxt-link>
+            </ul>
+        </header>
+        <main>
+            <aside id="signIn">
+                <h2 id="welcome">
+                    <span>Seja Bem Vindo,</span>
+                </h2>
+                <h2 v-if="userAccount.type == null" id="minimundo">
+                    <span>Ao</span> Mini Mundo!
+                </h2>
+                <h2 v-else-if="userAccount.type == 'teacher'" id="minimundo">
+                    Professor(a)!
+                </h2>
+                <div v-if="userAccount.type == null" id="choose-account">
+                    <div class="choice-options" @click="teacher()">Sou Professor</div>
+                    <nuxt-link class="choice-options" to="/student">
+                        <div>Sou Aluno</div>
+                    </nuxt-link>
+                </div>
+                <form v-if="userAccount.type == 'teacher'">
+                    <p>Faça login com as suas credenciais para ter acesso a plataforma.</p>
+                    <input id="email" v-model="credentials.email" name="email" type="email" placeholder="E-mail">
+                    <input id="password" v-model="credentials.password" name="password" type="password" placeholder="Senha">
+                    <div id="form-submit" @click="login()">Entrar</div>
+                </form>
+            </aside>
+            <article>
+                <img id="teacher-image" src="../static/teacher-2.png" alt="Teacher Image">
+            </article>
+        </main>
+    </section>
 </template>
-
 <script>
 export default {
-  name: 'SingInTeacher',
-  data() {
-    return {
-      credentials: {
-        email: '',
-        password: '',
-      },
-    }
-  },
+    name: 'LoginPage',
+    data() {
+        return {
+            credentials: {
+                email: '',
+                password: '',
+            },
 
-  methods: {
-    login() {
-      this.$auth
-        .loginWith('local', { data: this.credentials })
-        .then(() => {
-          console.log('Success!')
-        })
-        .catch((err) => {
-          console.error('Err!')
-          console.error(err)
-        })
+            userAccount: {
+                type: null,
+            },
+        }
     },
-  },
+
+    methods: {
+        login() {
+            this.$auth
+                .loginWith('local', { data: this.credentials })
+                .then(() => {
+                    console.log('Success!')
+                })
+                .catch((err) => {
+                    console.error('Err!')
+                    console.error(err)
+                })
+        },
+
+        teacher() {
+            this.userAccount.type = 'teacher'
+        },
+    },
+
 }
 </script>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 body {
-  font-family: 'Poppins', sans-serif;
-  background-image: linear-gradient(315deg, #00b712 0%, #5aff15 74%);
+    background-color: rgb(34, 34, 34) !important;
+    color: white;
+    font-family: poppinsregular !important;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 15px;
 }
-.content {
-  margin: 8%;
-  background-color: #fff;
-  padding: 4rem 1rem 4rem 1rem;
-  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.05);
+
+section {
+    padding: 15px !important;
 }
-.signin-text {
-  font-style: normal;
-  font-weight: 600 !important;
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
-.form-control {
-  display: block;
-  width: 100%;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  border-color: #00ac96 !important;
-  border-style: solid !important;
-  border-width: 0 0 1px 0 !important;
-  padding: 0px !important;
-  color: #495057;
-  height: auto;
-  border-radius: 0;
-  background-color: #fff;
-  background-clip: padding-box;
+
+#title {
+    flex-direction: column !important;
+    line-height: 10px !important;
 }
-.form-control:focus {
-  color: #495057;
-  background-color: #fff;
-  border-color: #fff;
-  outline: 0;
-  box-shadow: none;
+
+li {
+    display: inline-block;
+    margin: 20px;
 }
-.birthday-section {
-  padding: 15px;
+
+.nuxt-link-active {
+    color: white;
 }
-.btn-class {
-  border-color: #00ac96;
-  color: #00ac96;
+
+.nuxt-link-active:hover {
+    color: rgb(132, 14, 201);
+    transition: 0.3s all;
 }
-.btn-class:hover {
-  background-color: #00ac96;
-  color: #fff;
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: rgb(132, 14, 201);
+    transition: 0.3s all;
+}
+
+#student {
+    border: 2px solid rgb(132, 14, 201);
+    color: white;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+#student:hover {
+    background-color: rgb(132, 14, 201);
+    color: white;
+}
+
+h1 {
+    font-weight: 200;
+}
+
+#mini {
+    line-height: 10px !important;
+}
+
+main {
+    color: white !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+h2 {
+    margin: 50px;
+    font-size: 56px;
+    line-height: 10px;
+    font-family: poppinsmedium !important;
+    margin-left: 0;
+}
+
+span {
+    color: rgb(132, 14, 201);
+}
+
+p {
+    line-height: 20px;
+    max-width: 500px;
+    font-family: poppinslight !important;
+}
+
+img {
+    width: 515px;
+}
+
+#choose-account {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 85%;
+}
+
+.choice-options {
+    text-align: center;
+    margin: 10px;
+    height: 20px;
+    padding: 15px;
+    border-radius: 20px;
+    border: none;
+    box-sizing: content-box;
+    font-size: 15px;
+    width: 50%;
+    background-color: rgb(132, 14, 201);
+    color: white;
+    font-weight: bold;
+}
+
+.choice-options:hover {
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+#form-submit {
+    text-align: center;
+    margin-top: 20px;
+    height: 20px;
+    padding: 15px;
+    border-radius: 20px;
+    border: none;
+    box-sizing: content-box;
+    font-size: 15px;
+    width: 50%;
+    background-color: rgb(132, 14, 201);
+    color: white;
+    font-weight: bold;
+}
+
+#form-submit:hover {
+    cursor: pointer;
+}
+
+input {
+    margin-top: 20px;
+    height: 20px;
+    padding: 15px;
+    border-radius: 20px;
+    border: none;
+    box-sizing: content-box;
+    font-size: 15px;
 }
 </style>
