@@ -45,7 +45,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://127.0.0.1:3333/api/',
+    baseURL: 'https://api-minimundo.herokuapp.com/api',
   },
 
   auth: {
