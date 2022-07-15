@@ -1,70 +1,68 @@
 <template>
-  <body>
-    <div class="container mt-5">
-      <div class="d-flex justify-content-center row">
-        <div class="col-md-10 col-lg-10">
-          <div class="border">
-            <div class="question bg-white p-3 border-bottom">
-              <div
-                class="d-flex flex-row justify-content-between align-items-center mcq"
-              >
-                <h4>Título do Quiz</h4>
-                <span>(1 de n)</span>
-              </div>
-            </div>
-            <div class="question bg-white p-3 border-bottom">
-              <div class="d-flex flex-row align-items-center question-title">
-                <h3 class="text-danger">N.(Número da Pergunta)</h3>
-                <h5 class="mt-1 ml-2">Enunciado da Pergunta</h5>
-              </div>
-              <div class="ans ml-2">
-                <label class="radio">
-                  <input type="radio" name="brazil" value="brazil" />
-                  <span>Alternativa 1</span>
-                </label>
-              </div>
-              <div class="ans ml-2">
-                <label class="radio">
-                  <input type="radio" name="Germany" value="Germany" />
-                  <span>Alternativa 2</span>
-                </label>
-              </div>
-              <div class="ans ml-2">
-                <label class="radio">
-                  <input type="radio" name="Indonesia" value="Indonesia" />
-                  <span>Alternativa 3</span>
-                </label>
-              </div>
-              <div class="ans ml-2">
-                <label class="radio">
-                  <input type="radio" name="Russia" value="Russia" />
-                  <span>Alternativa 4</span>
-                </label>
-              </div>
-            </div>
+  <div class="container mt-5">
+    <div class="d-flex justify-content-center row">
+      <div class="col-md-10 col-lg-10">
+        <div class="border">
+          <div class="question bg-white p-3 border-bottom">
             <div
-              class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"
+              class="d-flex flex-row justify-content-between align-items-center mcq"
             >
-              <button
-                class="btn btn-primary d-flex align-items-center btn-danger"
-                type="button"
-              >
-                Anterior
-                <i class="fa fa-angle-left mt-1 mr-1"></i>
-              </button>
-              <button
-                class="btn btn-primary border-success align-items-center btn-success"
-                type="button"
-              >
-                Próxima
-                <i class="fa fa-angle-right ml-2"></i>
-              </button>
+              <h4>Título do Quiz</h4>
+              <span>(1 de n)</span>
             </div>
+          </div>
+          <div class="question bg-white p-3 border-bottom">
+            <div class="d-flex flex-row align-items-center question-title">
+              <h3 class="text-danger">N.(Número da Pergunta)</h3>
+              <h5 class="mt-1 ml-2">Enunciado da Pergunta</h5>
+            </div>
+            <div class="ans ml-2">
+              <label class="radio">
+                <input type="radio" name="brazil" value="brazil" />
+                <span>Alternativa 1</span>
+              </label>
+            </div>
+            <div class="ans ml-2">
+              <label class="radio">
+                <input type="radio" name="Germany" value="Germany" />
+                <span>Alternativa 2</span>
+              </label>
+            </div>
+            <div class="ans ml-2">
+              <label class="radio">
+                <input type="radio" name="Indonesia" value="Indonesia" />
+                <span>Alternativa 3</span>
+              </label>
+            </div>
+            <div class="ans ml-2">
+              <label class="radio">
+                <input type="radio" name="Russia" value="Russia" />
+                <span>Alternativa 4</span>
+              </label>
+            </div>
+          </div>
+          <div
+            class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"
+          >
+            <button
+              class="btn btn-primary d-flex align-items-center btn-danger"
+              type="button"
+            >
+              Anterior
+              <i class="fa fa-angle-left mt-1 mr-1"></i>
+            </button>
+            <button
+              class="btn btn-primary border-success align-items-center btn-success"
+              type="button"
+            >
+              Próxima
+              <i class="fa fa-angle-right ml-2"></i>
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
