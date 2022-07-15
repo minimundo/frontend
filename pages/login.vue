@@ -93,7 +93,7 @@ body {
 }
 
 section {
-    padding: 15px !important;
+    padding: 15px;
 }
 
 header {
@@ -101,11 +101,6 @@ header {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-}
-
-#title {
-    flex-direction: column !important;
-    line-height: 10px !important;
 }
 
 li {
@@ -118,15 +113,6 @@ li {
 }
 
 .nuxt-link-active:hover {
-    color: rgb(132, 14, 201);
-    transition: 0.3s all;
-}
-
-a {
-    color: white;
-}
-
-a:hover {
     color: rgb(132, 14, 201);
     transition: 0.3s all;
 }
@@ -145,10 +131,6 @@ a:hover {
 
 h1 {
     font-weight: 200;
-}
-
-#mini {
-    line-height: 10px !important;
 }
 
 main {
