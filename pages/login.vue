@@ -1,90 +1,96 @@
 <template>
-    <section>
-        <header>
-            <ul id="nav-bar">
-                <nuxt-link id="start" to="/">
-                    <li>Início</li>
-                </nuxt-link>
-                <nuxt-link id="about" to="/">
-                    <li>Sobre</li>
-                </nuxt-link>
-                <nuxt-link id="contact" to="/">
-                    <li>Contato</li>
-                </nuxt-link>
-                <nuxt-link v-if="userAccount.type == 'teacher'" id="student" to="/student">
-                    <li>Sou Aluno</li>
-                </nuxt-link>
-            </ul>
-        </header>
-        <main>
-            <aside id="signIn">
-                <h2 id="welcome">
-                    <span>Seja Bem Vindo,</span>
-                </h2>
-                <h2 v-if="userAccount.type == null" id="minimundo">
-                    <span>Ao</span> Mini Mundo!
-                </h2>
-                <h2 v-else-if="userAccount.type == 'teacher'" id="minimundo">
-                    Professor(a)!
-                </h2>
-                <div v-if="userAccount.type == null" id="choose-account">
-                    <div class="choice-options" @click="teacher()">Sou Professor</div>
-                    <nuxt-link class="choice-options" to="/student">
-                        <div>Sou Aluno</div>
-                    </nuxt-link>
+    <section id="loginPage" class="p-3">
+        <template v-if="userAccount.type == null">
+            <General />
+        </template> 
+        <template v-else-if="userAccount.type == 'teacher'">
+            <Teacher />
+        </template>
+        <template v-else-if="userAccount.type == 'student'">
+            <Student />
+        </template>
+
+        <main class="d-flex flex-row justify-content-center justify-content-md-between mt-2 mt-sm-5">
+            <aside id="signIn" class="d-flex d-md-block flex-column align-items-center align-items-md-start">
+                <div id="titles" class="d-flex d-lg-block flex-column align-items-center">
+                    <h2 id="welcome" class="mr-md-5 mb-0 mt-5">
+                        <span>Seja Bem Vindo,</span>
+                    </h2>
+                    <h2 v-if="userAccount.type == null" id="minimundo" class="mr-md-5 mt-0 mb-5">
+                        <span>Ao</span> Mini Mundo!
+                    </h2>
+                    <h2 v-else-if="userAccount.type == 'teacher'" id="teacher-title" class="mr-md-5 mt-0 mb-5">
+                        Professor(a)!
+                    </h2>
+                    <h2 v-else-if="userAccount.type == 'student'" id="teacher-title" class="mr-md-5 mt-0 mb-5">
+                        Aluno(a)!
+                    </h2>
                 </div>
-                <form v-if="userAccount.type == 'teacher'">
-                    <p>Faça login com as suas credenciais para ter acesso a plataforma.</p>
+                <div v-if="userAccount.type == null" id="choose-account" class="d-flex flex-column flex-sm-row justify-content-around align-items-center">
+                    <div class="choice-options" @click="teacher()">Sou Professor</div>
+                    <div class="choice-options" @click="student()">Sou Aluno</div>
+                </div>
+                <form v-else-if="userAccount.type == 'teacher'" id="form-teacher" class="d-flex flex-column align-items-center align-items-md-start">
+                    <p class="">Faça login com as suas credenciais.</p>
                     <input id="email" v-model="credentials.email" name="email" type="email" placeholder="E-mail">
                     <input id="password" v-model="credentials.password" name="password" type="password" placeholder="Senha">
                     <div id="form-submit" @click="login()">Entrar</div>
                 </form>
+                <form v-else-if="userAccount.type == 'student'" id="form-teacher" class="d-flex flex-column align-items-center align-items-md-start">
+                    <p id="support-text">Escolha a série, o continente e o país para começar a responder as perguntas.</p>
+                    <input id="grade" name="grade" type="number" placeholder="Informe sua série">
+                    <input id="country" name="country" type="text" placeholder="Escolha o continente">
+                    <div id="form-submit">Comece a responder!</div>
+                </form>
             </aside>
             <article>
-                <img id="teacher-image" src="../static/teacher-2.png" alt="Teacher Image">
+                <img id="teacher-image" class="d-none d-md-flex" src="../assets/images/teacher.png" alt="Teacher Image">
             </article>
         </main>
     </section>
 </template>
 <script>
+import General from '../components/navbar/general.vue'
+import Student from '../components/navbar/student.vue'
+import Teacher from '../components/navbar/teacher.vue'
 export default {
-    name: 'LoginPage',
+    name: "LoginPage",
+    components: { General,  Student, Teacher },
     data() {
         return {
             credentials: {
-                email: '',
-                password: '',
+                email: "",
+                password: "",
             },
-
             userAccount: {
                 type: null,
             },
-        }
+        };
     },
-
     methods: {
         login() {
             this.$auth
-                .loginWith('local', { data: this.credentials })
+                .loginWith("local", { data: this.credentials })
                 .then(() => {
-                    console.log('Success!')
-                })
+                console.log("Success!");
+            })
                 .catch((err) => {
-                    console.error('Err!')
-                    console.error(err)
-                })
+                console.error("Err!");
+                console.error(err);
+            });
         },
-
         teacher() {
-            this.userAccount.type = 'teacher'
+            this.userAccount.type = "teacher";
         },
-    },
-
+        student() {
+            this.userAccount.type = "student";
+        }
+    }
 }
 </script>
 <style>
 body {
-    background-color: rgb(34, 34, 34) !important;
+    background-color: var(--primary-background) !important;
     color: white;
     font-family: poppinsregular !important;
     max-width: 1400px;
@@ -92,40 +98,24 @@ body {
     padding: 15px;
 }
 
-section {
-    padding: 15px;
-}
-
-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-li {
-    display: inline-block;
-    margin: 20px;
-}
-
 .nuxt-link-active {
     color: white;
 }
 
 .nuxt-link-active:hover {
-    color: rgb(132, 14, 201);
+    color: var(--primary-color) ;
     transition: 0.3s all;
 }
 
 #student {
-    border: 2px solid rgb(132, 14, 201);
+    border: 2px solid var(--primary-color);
     color: white;
-    padding: 10px;
+    padding: 7px;
     border-radius: 15px;
 }
 
 #student:hover {
-    background-color: rgb(132, 14, 201);
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -135,42 +125,32 @@ h1 {
 
 main {
     color: white !important;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 50px;
 }
 
 h2 {
-    margin: 50px;
     font-size: 56px;
-    line-height: 10px;
     font-family: poppinsmedium !important;
-    margin-left: 0;
 }
 
 span {
-    color: rgb(132, 14, 201);
+    color: var(--primary-color);
 }
 
 p {
-    line-height: 20px;
     max-width: 500px;
     font-family: poppinslight !important;
 }
 
-img {
+#teacher-image {
     width: 515px;
 }
 
 #choose-account {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
     width: 85%;
 }
 
 .choice-options {
+    text-decoration: none;
     text-align: center;
     margin: 10px;
     height: 20px;
@@ -180,7 +160,7 @@ img {
     box-sizing: content-box;
     font-size: 15px;
     width: 50%;
-    background-color: rgb(132, 14, 201);
+    background-color: var(--primary-color);
     color: white;
     font-weight: bold;
 }
@@ -189,10 +169,15 @@ img {
     cursor: pointer;
 }
 
+.choice-options a {
+    text-decoration: none;
+    color: white;
+}
+
 form {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
 }
 
 #form-submit {
@@ -204,8 +189,8 @@ form {
     border: none;
     box-sizing: content-box;
     font-size: 15px;
-    width: 50%;
-    background-color: rgb(132, 14, 201);
+    width: 45%;
+    background-color:var(--primary-color);
     color: white;
     font-weight: bold;
 }
@@ -217,10 +202,55 @@ form {
 input {
     margin-top: 20px;
     height: 20px;
+    width: 90%;
     padding: 15px;
     border-radius: 20px;
     border: none;
     box-sizing: content-box;
     font-size: 15px;
+}
+
+@media screen and (max-width: 1200px){
+
+    #teacher-image {
+        width: 425px;
+    }
+}
+
+@media screen and (max-width: 992px){
+
+    #teacher-image {
+        width: 345px;
+    }
+}
+
+@media screen and (max-width: 576px){
+
+    header {
+        border-bottom: solid 3px white;
+    }
+
+    h2 {
+        font-size: 42px;
+    }
+
+    .choice-options {
+        font-size: 13px;
+    }
+
+    .choose-account {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 400px){
+
+    p {
+        font-size: 13px;
+    }
+
+    h2 {
+        font-size: 34px;
+    }
 }
 </style>
