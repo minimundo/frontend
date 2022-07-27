@@ -183,7 +183,6 @@ form {
 #form-submit {
     text-align: center;
     margin-top: 20px;
-    height: 20px;
     padding: 15px;
     border-radius: 20px;
     border: none;
