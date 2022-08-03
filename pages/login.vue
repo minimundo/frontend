@@ -2,7 +2,7 @@
     <section id="loginPage" class="p-3">
         <template v-if="userAccount.type == null">
             <General />
-        </template> 
+        </template>
         <template v-else-if="userAccount.type == 'teacher'">
             <Teacher />
         </template>
@@ -26,18 +26,37 @@
                         Aluno(a)!
                     </h2>
                 </div>
-                <div v-if="userAccount.type == null" id="choose-account" class="d-flex flex-column flex-sm-row justify-content-around align-items-center">
+                <div
+v-if="userAccount.type == null" id="choose-account"
+                    class="d-flex flex-column flex-sm-row justify-content-around align-items-center">
                     <div class="choice-options" @click="teacher()">Sou Professor</div>
                     <div class="choice-options" @click="student()">Sou Aluno</div>
                 </div>
-                <form v-else-if="userAccount.type == 'teacher'" id="form-teacher" class="d-flex flex-column align-items-center align-items-md-start">
-                    <p class="">Faça login com as suas credenciais.</p>
-                    <input id="email" v-model="credentials.email" name="email" type="email" placeholder="E-mail">
-                    <input id="password" v-model="credentials.password" name="password" type="password" placeholder="Senha">
-                    <div id="form-submit" @click="login()">Entrar</div>
+                <form
+v-else-if="userAccount.type == 'teacher'" id="form-teacher"
+                    class="d-flex flex-column align-items-center align-items-md-start">
+                    <p>Faça login com as suas credenciais.</p>
+                    <ValidationObserver ref="form" tag="div" class="vee-validation-field">
+                        <ValidationProvider v-slot="{ errors }" tag="div" rules="required|email">
+                            <input
+id="email" v-model="credentials.email" name="email" type="email"
+                                placeholder="E-mail">
+                            <span class="error-validation mt-2 ml-2">{{ errors[0] }}</span>
+                        </ValidationProvider>
+                        <ValidationProvider v-slot="{ errors }" tag="div" rules="required">
+                            <input
+id="password" v-model="credentials.password" name="password" type="password"
+                                placeholder="Senha">
+                            <span class="error-validation mt-2 ml-2">{{ errors[0] }}</span>
+                        </ValidationProvider>
+                    </ValidationObserver>
+                    <div id="form-submit" @click="submit()">Entrar</div>
                 </form>
-                <form v-else-if="userAccount.type == 'student'" id="form-teacher" class="d-flex flex-column align-items-center align-items-md-start">
-                    <p id="support-text">Escolha a série, o continente e o país para começar a responder as perguntas.</p>
+                <form
+v-else-if="userAccount.type == 'student'" id="form-teacher"
+                    class="d-flex flex-column align-items-center align-items-md-start">
+                    <p id="support-text">Escolha a série, o continente e o país para começar a responder as perguntas.
+                    </p>
                     <input id="grade" name="grade" type="number" placeholder="Informe sua série">
                     <input id="country" name="country" type="text" placeholder="Escolha o continente">
                     <div id="form-submit">Comece a responder!</div>
@@ -53,9 +72,10 @@
 import General from '../components/navbar/general.vue'
 import Student from '../components/navbar/student.vue'
 import Teacher from '../components/navbar/teacher.vue'
+
 export default {
     name: "LoginPage",
-    components: { General,  Student, Teacher },
+    components: { General, Student, Teacher },
     data() {
         return {
             credentials: {
@@ -68,17 +88,25 @@ export default {
         };
     },
     methods: {
+        async submit() {
+            const isValid = await this.$refs.form.validate();
+            if (isValid) {
+                this.login()
+            }
+        },
+        
         login() {
             this.$auth
                 .loginWith("local", { data: this.credentials })
                 .then(() => {
-                console.log("Success!");
-            })
+                    console.log("Success!");
+                })
                 .catch((err) => {
-                console.error("Err!");
-                console.error(err);
-            });
+                    console.error("Err!");
+                    console.error(err);
+                });
         },
+
         teacher() {
             this.userAccount.type = "teacher";
         },
@@ -103,8 +131,12 @@ body {
 }
 
 .nuxt-link-active:hover {
-    color: var(--primary-color) ;
+    color: var(--primary-color);
     transition: 0.3s all;
+}
+
+.vee-validation-field {
+    width: 100%;
 }
 
 #student {
@@ -189,7 +221,7 @@ form {
     box-sizing: content-box;
     font-size: 15px;
     width: 45%;
-    background-color:var(--primary-color);
+    background-color: var(--primary-color);
     color: white;
     font-weight: bold;
 }
@@ -200,7 +232,6 @@ form {
 
 input {
     margin-top: 20px;
-    height: 20px;
     width: 90%;
     padding: 15px;
     border-radius: 20px;
@@ -209,21 +240,25 @@ input {
     font-size: 15px;
 }
 
-@media screen and (max-width: 1200px){
+.error-validation {
+    color: #ee4242;
+}
+
+@media screen and (max-width: 1200px) {
 
     #teacher-image {
         width: 425px;
     }
 }
 
-@media screen and (max-width: 992px){
+@media screen and (max-width: 992px) {
 
     #teacher-image {
         width: 345px;
     }
 }
 
-@media screen and (max-width: 576px){
+@media screen and (max-width: 576px) {
 
     header {
         border-bottom: solid 3px white;
@@ -242,7 +277,7 @@ input {
     }
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 400px) {
 
     p {
         font-size: 13px;
