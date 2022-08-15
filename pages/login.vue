@@ -1,14 +1,8 @@
 <template>
     <section id="loginPage" class="p-3">
-        <template v-if="userAccount.type == null">
-            <General />
-        </template>
-        <template v-else-if="userAccount.type == 'teacher'">
-            <Teacher />
-        </template>
-        <template v-else-if="userAccount.type == 'student'">
-            <Student />
-        </template>
+        <BaseNavbar v-if="userAccount.type == null"/>
+        <BaseNavbar v-else-if="userAccount.type == 'teacher'" variant="teacher" @modifyTypeUser="student()"/>
+        <BaseNavbar v-else-if="userAccount.type == 'student'" variant="student" @modifyTypeUser="teacher()"/>
 
         <main class="d-flex flex-row justify-content-center justify-content-md-between mt-2 mt-sm-5">
             <aside id="signIn" class="d-flex d-md-block flex-column align-items-center align-items-md-start">
@@ -69,13 +63,11 @@ v-else-if="userAccount.type == 'student'" id="form-teacher"
     </section>
 </template>
 <script>
-import General from '../components/navbar/general.vue'
-import Student from '../components/navbar/student.vue'
-import Teacher from '../components/navbar/teacher.vue'
+import BaseNavbar from '../components/navbar/Base.vue'
 
 export default {
     name: "LoginPage",
-    components: { General, Student, Teacher },
+    components: { BaseNavbar },
     data() {
         return {
             credentials: {
