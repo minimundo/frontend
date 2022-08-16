@@ -141,10 +141,12 @@
 </template>
 <script>
 import BaseNavbar from '../components/navbar/Base.vue'
+import ToastMixin from '~/mixins/toastMixin'
 
 export default {
   name: 'LoginPage',
   components: { BaseNavbar },
+  mixins: [ToastMixin],
   data() {
     return {
       credentials: {
@@ -163,19 +165,19 @@ export default {
         this.login()
       }
     },
-
     login() {
       this.$auth
         .loginWith('local', { data: this.credentials })
         .then(() => {
           console.log('Success!')
+          this.showToastMixin('Seja Bem vindo!', 'Sucesso', 'success')
         })
         .catch((err) => {
           console.error('Err!')
           console.error(err)
+          this.showToastMixin('Verifique suas credenciais!', 'Erro no Login', 'warning')
         })
     },
-
     teacher() {
       this.userAccount.type = 'teacher'
     },
