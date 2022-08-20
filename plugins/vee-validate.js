@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
+import { ValidationProvider, ValidationObserver, extend, configure } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
 
 Vue.component('ValidationProvider', ValidationProvider)
@@ -13,4 +13,11 @@ extend('required', {
 extend('email', {
     ...email,
     message: 'O email inserido deve ser válido!'
+})
+
+configure({
+    classes: {
+        valid: 'is-valid',
+        invalid: 'is-invalid'
+    }
 })

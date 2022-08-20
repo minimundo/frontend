@@ -78,23 +78,25 @@
           <p>Faça login com as suas credenciais.</p>
           <ValidationObserver ref="form" tag="div" class="vee-validation-field">
             <ValidationProvider
-              v-slot="{ errors }"
+              v-slot="{ errors, classes}"
               tag="div"
               rules="required|email"
             >
               <input
                 id="email"
                 v-model="credentials.email"
+                :class="classes"
                 name="email"
                 type="email"
                 placeholder="E-mail"
               />
               <span class="error-validation mt-2 ml-2">{{ errors[0] }}</span>
             </ValidationProvider>
-            <ValidationProvider v-slot="{ errors }" tag="div" rules="required">
+            <ValidationProvider v-slot="{ errors, classes }" tag="div" rules="required">
               <input
                 id="password"
                 v-model="credentials.password"
+                :class="classes"
                 name="password"
                 type="password"
                 placeholder="Senha"
@@ -147,6 +149,8 @@ export default {
   name: 'LoginPage',
   components: { BaseNavbar },
   mixins: [ToastMixin],
+  middleware: 'auth', 
+  auth : 'guest',
   data() {
     return {
       credentials: {
@@ -169,13 +173,13 @@ export default {
       this.$auth
         .loginWith('local', { data: this.credentials })
         .then(() => {
-          console.log('Success!')
           this.showToastMixin('Seja Bem vindo!', 'Sucesso', 'success')
         })
         .catch((err) => {
-          console.error('Err!')
-          console.error(err)
-          this.showToastMixin('Verifique suas credenciais!', 'Erro no Login', 'warning')
+          console.error(err.response.data)
+          if (err.response.data === "Invalid credentials") {
+            this.showToastMixin('Verifique suas credenciais!', 'Erro no Login', 'warning')
+          }
         })
     },
     teacher() {
@@ -306,13 +310,21 @@ input {
   width: 90%;
   padding: 15px;
   border-radius: 20px;
-  border: none;
+  border: .0625rem solid var(--primary-background);
   box-sizing: content-box;
   font-size: 15px;
 }
 
+.is-valid {
+  border: 2px solid #00c9a7;
+}
+
+.is-invalid {
+  border: 2px solid #ff0000;
+}
+
 .error-validation {
-  color: #ee4242;
+  color: #ff0000;
 }
 
 @media screen and (max-width: 1200px) {
