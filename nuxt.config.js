@@ -71,6 +71,8 @@ export default {
     },
 
     redirect: {
+      login: '/login',
+      logout: '/',
       home: '/teacher',
     },
   },

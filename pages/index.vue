@@ -9,6 +9,8 @@
 <script>
 export default {
   name: 'IndexPage',
+  middleware: 'auth', 
+  auth : 'guest',
 }
 </script>
 <style>
