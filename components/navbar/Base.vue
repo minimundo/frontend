@@ -2,66 +2,89 @@
   <div id="header">
     <header
       id="nav-bar"
-      class="d-flex flex-wrap justify-content-between py-3 mb-4"
+      class=""
     >
-      <div class="d-none d-sm-flex">
-        <a
-          id="logo"
+      <div class="d-flex flex-wrap justify-content-between container-fluid">
+        <div class="d-none d-sm-flex">
+          <a
+            id="logo"
+            class="
+              d-none d-sm-flex
+              align-items-center
+              mb-3 mb-md-0
+              me-md-auto
+              text-decoration-none
+            "
+          >
+            <img
+              id="logo-img"
+              src="~/assets/images/logo.png"
+              class="logo"
+              alt="logo"
+            />
+          </a>
+        </div>
+        <ul
+          v-if="!$auth.loggedIn"
+          id="nav-bar-items"
           class="
-            d-none d-sm-flex
+            mx-auto
+            m-md-0
+            flex-column-reverse
             align-items-center
-            mb-3 mb-md-0
-            me-md-auto
-            text-decoration-none
+            flex-sm-row
+            nav nav-pills
+            align-items-sm-baseline
           "
         >
-          <img
-            id="logo-img"
-            src="~/assets/images/logo.png"
-            class="logo"
-            alt="logo"
-          />
-        </a>
+          <li id="home" class="nav-item">
+            <a href="#" class="nav-link d-inline-block">Início</a>
+          </li>
+          <li id="about" class="nav-item">
+            <a href="#" class="nav-link d-inline-block">Sobre</a>
+          </li>
+          <li id="contact" class="nav-item">
+            <a href="#" class="nav-link d-inline-block">Contato</a>
+          </li>
+          <li
+            v-if="variant === 'student'"
+            id="teacher"
+            class="nav-item modify-type-user"
+            @click="onClick()"
+          >
+            <a href="#" class="nav-link d-inline-block">Sou Professor</a>
+          </li>
+          <li
+            v-if="variant === 'teacher'"
+            id="student"
+            class="nav-item modify-type-user"
+            @click="onClick()"
+          >
+            <a href="#" class="nav-link d-inline-block">Sou Aluno</a>
+          </li>
+        </ul>
+        <ul
+          v-if="$auth.loggedIn"
+          id="nav-bar-items"
+          class="
+            mx-auto
+            m-md-0
+            flex-column-reverse
+            align-items-center
+            flex-sm-row
+            nav nav-pills
+            align-items-sm-baseline
+          "
+        >
+          <li
+            id="logout"
+            class="nav-item modify-type-user"
+            @click="logout()"
+          >
+            <a href="#" class="nav-link d-inline-block">Sair</a>
+          </li>
+        </ul>
       </div>
-
-      <ul
-        id="nav-bar-items"
-        class="
-          mx-auto
-          m-md-0
-          flex-column-reverse
-          align-items-center
-          flex-sm-row
-          nav nav-pills
-          align-items-sm-baseline
-        "
-      >
-        <li id="home" class="nav-item">
-          <a href="#" class="nav-link d-inline-block">Início</a>
-        </li>
-        <li id="about" class="nav-item">
-          <a href="#" class="nav-link d-inline-block">Sobre</a>
-        </li>
-        <li id="contact" class="nav-item">
-          <a href="#" class="nav-link d-inline-block">Contato</a>
-        </li>
-        <li
-          v-if="variant === 'student'"
-          id="teacher"
-          class="nav-item modify-type-user"
-          @click="onClick()"
-        >
-          <a href="#" class="nav-link d-inline-block">Sou Professor</a>
-        </li>
-        <li
-          v-if="variant === 'teacher'"
-          id="student"
-          class="nav-item modify-type-user"
-          @click="onClick()"
-        >
-          <a href="#" class="nav-link d-inline-block">Sou Aluno</a>
-        </li>
-      </ul>
     </header>
   </div>
 </template>
@@ -78,14 +101,26 @@ export default {
     onClick() {
       this.$emit('modifyTypeUser')
     },
+    logout() {
+      const userToken = this.$auth.strategy.$auth.$storage._state["_token.local"]
+      this.$auth.logout()
+      this.$axios({
+        url: '/auth',
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${userToken.replace('Bearer ', '')}`}
+      })
+      this.$router.push('/login')
+    },
   },
 }
 </script>
 <style>
-body {
+header {
   background-color: var(--primary-background) !important;
   color: white;
-  font-family: poppinsregular !important;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 15px;
 }
 
 #header .nav-link {

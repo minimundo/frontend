@@ -11,13 +11,21 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: "stylesheet", href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css",
+        integrity: "sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==",
+        crossorigin: "anonymous",
+        referrerpolicy: "no-referrer"
+      }
+    ],
+    
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/layouts/stylesheet.css',
-    '~/layouts/config.css'
+    '~/assets/css/stylesheet.css',
+    '~/assets/css/config.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -61,10 +69,11 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: 'signin/teacher',
+            url: 'auth',
             method: 'post',
-            propertyName: 'token.token',
+            propertyName: 'token',
           },
+          logout: false,
           user: false,
         },
       },
@@ -73,7 +82,7 @@ export default {
     redirect: {
       login: '/login',
       logout: '/',
-      home: '/teacher',
+      home: '/dashboard',
     },
   },
 
