@@ -46,8 +46,8 @@ export default {
     }
   },
   methods: {
-    getCountry() {
-      this.countries = this.$axios.$get('/countries')
+    async getCountry() {
+      this.countries = await this.$axios.$get('/countries')
     },
   },
 }
@@ -58,6 +58,8 @@ body {
   color: white;
   font-family: poppinsregular !important;
   max-width: 1400px;
+  margin: 0 auto;
+  padding: 15px;
 }
 
 #nav-dashboard {
