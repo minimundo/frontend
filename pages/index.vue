@@ -13,7 +13,7 @@ export default {
   auth : 'guest',
 }
 </script>
-<style>
+<style scoped>
 body {
   background-color: rgb(34, 34, 34);
   color: white;
