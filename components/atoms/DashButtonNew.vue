@@ -29,6 +29,8 @@ export default {
     $currentRoute() {
       if (this.route === '/dashboard/questions') {
         return 'Nova Questão'
+      } else if(this.route === '/dashboard/countries') {
+        return 'Novo País'
       } else if(this.route === '/dashboard/users') {
         return 'Novo Usuário'
       } else {
