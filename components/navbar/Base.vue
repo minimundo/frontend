@@ -114,7 +114,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 header {
   background-color: var(--primary-background) !important;
   color: white;
