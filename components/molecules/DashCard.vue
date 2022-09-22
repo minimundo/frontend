@@ -31,7 +31,7 @@
 export default {
   props: {
     icon: { type: String, required: true },
-    length: { type: String, required: true },
+    length: { type: Number, required: true },
     text: { type: String, required: true },
     to: { type: String, required: true },
   },
