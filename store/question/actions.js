@@ -12,7 +12,7 @@ export default {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${userToken.replace('Bearer ', '')}`}
         }).then(() => {
-            this.$router.go(0)
+            context.dispatch('getQuestion');
         })
     }
 }
