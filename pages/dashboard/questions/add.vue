@@ -1,12 +1,10 @@
 <template>
     <div>
-        <Form />
+        <FormQuestion />
     </div>
 </template>
 <script>
 export default {
     layout: 'Dashboard',
-    created() {
-    },
 }
 </script>

@@ -7,7 +7,7 @@
 export default {
     layout: 'Dashboard',
     created() {
-        this.$store.dispatch("question/getQuestion");
+        this.$store.dispatch("question/index");
     },
 }
 </script>

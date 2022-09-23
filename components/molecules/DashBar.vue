@@ -9,7 +9,7 @@
         <div class="navbar mx-0 px-0">
           <div class="navbar-nav me-auto mb-2 mb-sm-0">
             <DashItem text="Dashboard" to="/dashboard" />
-            <DashItem text="Questions" to="/dashboard/questions" />
+            <DashItem text="Questões" to="/dashboard/questions" />
             <DashItem text="Países" to="/dashboard/countries" />
             <DashItem text="Users" to="/dashboard/users" />
           </div>
