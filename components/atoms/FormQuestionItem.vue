@@ -18,6 +18,8 @@
         id="floatingTextarea"
         class="form-control"
         :placeholder="`Escreva aqui.`"
+        value=""
+        @input="propagateInput"
       ></textarea>
     </div>
     <input
@@ -32,11 +34,14 @@
       :id="id"
       :type="type"
       class="form-control"
+      value=""
+      @input="propagateInput"
     />
     <select
       v-if="type === 'select-correct'"
       :id="id"
       class="form-select btn btn-outline-secondary"
+      @input="propagateInput"
     >
       <option selected disabled></option>
       <option value="1">1</option>
@@ -48,6 +53,7 @@
       v-if="type === 'select-grade'"
       :id="id"
       class="form-select btn btn-outline-secondary"
+      @input="propagateInput"
     >
       <option selected disabled></option>
       <option value="6">6º ano</option>
@@ -90,6 +96,11 @@ export default {
     title: { type: String, required: true },
     description: { type: String, default: '' },
   },
+  methods: {
+    propagateInput(event) {
+      this.$emit('input', event.target.value)
+    },
+  }
 }
 </script>
 <style scoped>

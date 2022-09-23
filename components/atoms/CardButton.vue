@@ -9,7 +9,7 @@
           mr-1
           btn btn-primary
         "
-        @click="$store.dispatch(action, params)"
+        @click="actionComponent"
       >
         <i v-if="icon" class="fas fa-lg" :class="[iconClass]"></i>
       </button>
@@ -28,6 +28,11 @@ export default {
       iconClass: `fa-${this.icon}`,
     }
   },
+  methods: {
+    actionComponent() {
+      this.$store.dispatch(this.action, this.params)
+    }
+  }
 }
 </script>
 <style>
