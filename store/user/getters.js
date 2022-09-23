@@ -1,5 +1,11 @@
-export default {
-  users(state) {
-    return state.questions
+const getters = {
+  index: (state) => {
+    return state.users;
+  },
+  indexCount: (state) => {
+    const users = state.users
+    return users.length;
   }
 }
+
+export default getters
