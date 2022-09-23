@@ -5,41 +5,38 @@
         icon="quora"
         text="Questões"
         to="/dashboard/questions"
-        :length="$dataQuestionLength"
+        :length="$dataQuestionCount"
       />
       <DashCard
         icon="flag"
         text="Países"
         to="/dashboard/countries"
-        :length="$dataCountryLength"
+        :length="$dataCountryCount"
       />
       <DashCard
         icon="address-card"
         text="Usuários"
         to="/dashboard/users"
-        :length="$dataUserLength"
+        :length="$dataUserCount"
       />
     </div>
   </div>
 </template>
-    <script>
+<script>
 export default {
   computed: {
-    $dataQuestionLength() {
-      const data = this.$store.state.question.questions
-      return data.length
+    $dataQuestionCount() {
+      return this.$store.getters['question/indexCount']
     },
-    $dataCountryLength() {
-      const data = this.$store.state.country.countries
-      return data.length
+    $dataCountryCount() {
+      return this.$store.getters['country/indexCount']
     },
-    $dataUserLength() {
-      const data = this.$store.state.user.users
-      return data.length
+    $dataUserCount() {
+      return this.$store.getters['user/indexCount']
     },
   },
   created() {
-    this.$store.dispatch('question/getQuestion')
+    this.$store.dispatch('question/index')
     this.$store.dispatch('country/getCountry')
     this.$store.dispatch('user/getUser')
   },

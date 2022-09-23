@@ -1,16 +1,16 @@
 <template>
   <div class="card-question">
-    <Container>
+    <Container v-if="$dataQuestions">
       <div
-        v-for="question in $store.state.question.questions"
+        v-for="question in $dataQuestions"
         :key="question.id"
         class="card my-2 px-3 py-3"
       >
         <div class="d-flex justify-content-between">
           <CardItem icon="user" title="Criador:" content="Nome do Criador da Pergunta"/>
           <div class="d-flex justify-content-end col-2">
-            <CardButton icon="pen-to-square" action="question/editQuestion" :params="question.id"/>
-            <CardButton icon="trash" action="question/removeQuestion" :params="question.id"/>
+            <CardButton icon="pen-to-square" action="question/update" :params="question.id"/>
+            <CardButton icon="trash" action="question/destroy" :params="question.id"/>
           </div>
         </div>
         <CardItem icon="newspaper" title="Enunciado:" :content="question.wording"/>
@@ -39,6 +39,17 @@
 <script>
 export default {
   middleware: 'auth',
+  async asyncData({store}) {
+    await store.dispatch('question/index')
+  },
+  computed: { 
+    $dataQuestions() {
+      return this.$store.getters['question/index']
+    }
+  },
+  created() {
+    this.$store.dispatch('question/index')
+  }
 }
 </script>
 <style>
