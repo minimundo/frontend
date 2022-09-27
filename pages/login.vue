@@ -176,7 +176,6 @@ export default {
           this.showToastMixin('Seja Bem vindo!', 'Sucesso', 'success')
         })
         .catch((err) => {
-          console.error(err.response.data)
           if (err.response.data === "Invalid credentials") {
             this.showToastMixin('Verifique suas credenciais!', 'Erro no Login', 'warning')
           }
@@ -191,14 +190,10 @@ export default {
   },
 }
 </script>
-<style>
-body {
-  background-color: var(--primary-background) !important;
-  color: white;
-  font-family: poppinsregular !important;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 15px;
+<style scoped>
+section {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
 }
 
 .nuxt-link-active {
