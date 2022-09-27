@@ -28,6 +28,7 @@
         type != 'title' &&
         type != 'select-correct' &&
         type != 'select-grade' &&
+        type != 'select-country' &&
         type != 'button-cancel' &&
         type != 'button-save'
       "
@@ -56,13 +57,27 @@
       @input="propagateInput"
     >
       <option selected disabled></option>
+      <option value="4">4º ano</option>
+      <option value="5">5º ano</option>
       <option value="6">6º ano</option>
       <option value="7">7º ano</option>
       <option value="8">8º ano</option>
       <option value="9">9º ano</option>
-      <option value="1">1º ano (Médio)</option>
-      <option value="2">2º ano (Médio)</option>
-      <option value="3">3º ano (Médio)</option>
+    </select>
+    <select
+      v-if="type === 'select-country'"
+      :id="id"
+      class="form-select btn btn-outline-secondary"
+      @input="propagateInput"
+    >
+      <option selected disabled></option>
+      <option
+        v-for="country in countries"
+        :key="country.id"
+        :value="country.id"
+      >
+        {{ country.name }}
+      </option>
     </select>
     <small
       v-if="type != 'title' && type != 'button-cancel' && type != 'button-save'"
@@ -72,7 +87,11 @@
     </small>
     <div>
       <div v-if="type === 'button-cancel'" class="card-button">
-        <nuxt-link :id="id" to="/dashboard/questions" class="btn btn-sm px-2 py-2 btn">
+        <nuxt-link
+          :id="id"
+          to="/dashboard/questions"
+          class="btn btn-sm px-2 py-2 btn"
+        >
           {{ title }}
         </nuxt-link>
       </div>
@@ -95,6 +114,10 @@ export default {
     id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, default: '' },
+    countries: { type: Array,
+      default() {
+        return []
+      } },
   },
   methods: {
     propagateInput(event) {

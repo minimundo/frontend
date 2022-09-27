@@ -9,7 +9,7 @@
           mr-1
           btn btn-primary
         "
-        @click="actionComponent"
+        @click="propagateClick"
       >
         <i v-if="icon" class="fas fa-lg" :class="[iconClass]"></i>
       </button>
@@ -20,8 +20,6 @@
 export default {
   props: {
     icon: { type: String, required: true},
-    action: { type: String, required: true},
-    params: { type: Number, String, required: true}
   },
   data() {
     return {
@@ -29,8 +27,8 @@ export default {
     }
   },
   methods: {
-    actionComponent() {
-      this.$store.dispatch(this.action, this.params)
+    propagateClick() {
+      this.$emit('propagateClick')
     }
   }
 }
