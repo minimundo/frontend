@@ -37,8 +37,8 @@ export default {
   },
   created() {
     this.$store.dispatch('question/index')
-    this.$store.dispatch('country/getCountry')
-    this.$store.dispatch('user/getUser')
+    this.$store.dispatch('country/index')
+    this.$store.dispatch('user/index')
   },
 }
 </script>
