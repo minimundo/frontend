@@ -49,15 +49,42 @@
           <li
             id="logout"
             class="nav-item modify-type-user"
-            @click="logout()"
+            @click="$bvModal.show('logoutModal')"
           >
             <a href="#" class="nav-link d-inline-block">Sair</a>
           </li>
+          <b-modal id="logoutModal" hide-backdrop hide-footer hide-header-close>
+              <template #modal-title>
+                <p class="text-body font-weight-bold m-0">Deseja realizar o logout ?</p>
+              </template>
+              <div class="d-block">
+                <p class="text-body">
+                  Todos os dados não salvos, serão desconsiderados.
+                </p>
+              </div>
+              <div class="d-flex justify-content-end">
+                <div
+                  class="btn btn-light m-1"
+                  @click="$bvModal.hide('logoutModal')"
+                >
+                  Cancelar
+                </div>
+                <div
+                  class="btn btn-danger m-1"
+                  @click="logout"
+                >
+                  Sair
+                </div>
+              </div>
+            </b-modal>
         </ul>
     </div>
 </template>
 <script>
+import ToastMixin from '~/mixins/toastMixin'
+
 export default {
+  mixins: [ToastMixin],
   props: {
     variant: {
       type: String,
@@ -69,14 +96,16 @@ export default {
       this.$emit('modifyTypeUser')
     },
     logout() {
-      const userToken = this.$auth.strategy.$auth.$storage._state["_token.local"]
-      this.$auth.logout()
-      this.$axios({
-        url: '/auth',
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${userToken.replace('Bearer ', '')}`}
+      this.$axios.delete('/auth').then(() => {
+        this.$auth.logout().then(() => {
+          this.$router.push('/login')
+          this.showToastMixin(
+            'Logout realizado com sucesso.',
+            'Até Logo!',
+            'success'
+          )
+        })
       })
-      this.$router.push('/login')
     },
   },
 }
