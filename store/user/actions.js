@@ -1,7 +1,7 @@
 export default {
-    getUser(context) {
+    index(context) {
         return this.$axios.$get('/users').then((response) => {
-            context.commit('STORE', response)
+            context.commit('INDEX', response)
         })
     },
 

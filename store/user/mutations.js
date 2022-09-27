@@ -1,5 +1,5 @@
 export default {
-    STORE(state, payload) {
+    INDEX(state, payload) {
         state.users = payload
     }
 }
