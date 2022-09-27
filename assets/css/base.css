@@ -5,8 +5,8 @@ body {
     width: 100%;
     overflow-x: hidden;
     font-size: 1rem;
-    padding-bottom: 10.9rem;
     font-size: 16px;
+    margin: 0;
 }
   
 html {
