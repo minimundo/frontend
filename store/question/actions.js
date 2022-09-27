@@ -6,11 +6,15 @@ export default {
     },
 
     async create(context, payload) {
-        const userToken = this.$auth.strategy.$auth.$storage._state["_token.local"]
-        await this.$axios('/questions', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${userToken.replace('Bearer ', '')}` },
-            body: payload
+        await this.$axios.post('/questions', {
+            wording: payload.wording,
+            answer1: payload.answer1,
+            answer2: payload.answer2,
+            answer3: payload.answer3,
+            answer4: payload.answer4,
+            correct_answer: payload.correct_answer,
+            grade: payload.grade,
+            country_id: payload.country_id
         }).then((response) => {
             context.commit('STORE', response);
         })
@@ -32,11 +36,7 @@ export default {
     },
 
     async destroy(context, id) {
-        const userToken = this.$auth.strategy.$auth.$storage._state["_token.local"]
-        return await this.$axios(`/questions/${id}`, {
-            method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${userToken.replace('Bearer ', '')}` }
-        }).then(() => {
+        return await this.$axios.delete(`/questions/${id}`).then(() => {
             context.dispatch('index');
         })
     }
