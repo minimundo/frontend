@@ -56,11 +56,7 @@
             </b-modal>
           </div>
         </div>
-        <CardItem icon="flag" title="País:" :content="$dataCountryName(question.country_id)" />
-        <button
-          class="btn btn-primary"
-          @click="dataNameCountry(question.country_id)"
-        ></button>
+        <CardItem icon="flag" title="País:" content="Nome do País" />
         <ul class="items">
           <CardItem
             icon="newspaper"
@@ -109,9 +105,6 @@ export default {
     $dataCountries() {
       return this.$store.getters['country/index']
     },
-    $dataCountryName(id) {
-      return this.dataNameCountry(id)
-    }
   },
   created() {
     this.$store.dispatch('country/index')
@@ -137,14 +130,6 @@ export default {
             )
           }
         })
-    },
-    dataNameCountry(countryId) {
-      const countries = this.$dataCountries
-      countries.forEach(country => {
-        if (country.id === countryId) {
-          return country.name
-        }
-      })
     },
   },
 }
