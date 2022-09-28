@@ -1,0 +1,40 @@
+body {
+    background-color: var(--primary-background) !important;
+    font-family: poppinsregular !important;
+    color: white;
+    width: 100%;
+    overflow-x: hidden;
+    font-size: 1rem;
+    font-size: 16px;
+    margin: 0;
+}
+  
+html {
+    position: relative;
+}
+  
+html,
+body {
+    min-height: 100%;
+}
+  
+#__nuxt,
+#__layout {
+    height: 100%;
+    width: 100%;
+}
+  
+* {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    border: 0;
+    outline: none;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+   *:focus {
+    outline: none;
+}
