@@ -21,7 +21,9 @@ export default {
     },
 
     async show(context, id) {
-        return await this.$axios.$get(`/questions/${id}`)
+        await this.$axios.$get(`/questions/${id}`).then((response) => {
+            context.commit('SHOW', response)
+        })
     },
 
     async update(context, payload, id) {

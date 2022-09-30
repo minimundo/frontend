@@ -5,6 +5,9 @@ const getters = {
   indexCount: (state) => {
     const questions = state.questions
     return questions.length;
+  },
+  show: (state) => {
+    return state.question
   }
 }
 
