@@ -18,7 +18,7 @@
         id="floatingTextarea"
         class="form-control"
         :placeholder="`Escreva aqui.`"
-        value=""
+        :value="value"
         @input="propagateInput"
       ></textarea>
     </div>
@@ -110,7 +110,8 @@
 <script>
 export default {
   props: {
-    type: { type: String, required: true },
+    type: { type: String, Number, required: true },
+    value: { type: String, default: '' },
     id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, default: '' },
