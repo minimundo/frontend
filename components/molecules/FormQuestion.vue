@@ -26,6 +26,7 @@
             title="Enunciado"
             description="Apresenta os detalhes e trás a pergunta a ser respondida."
           />
+          <span style="color : red" class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.wording.required">O enunciado é um campo obrigatorio</span>
           <FormQuestionItem
             id="answer1"
             v-model="answer1"
@@ -33,6 +34,7 @@
             title="Alternativa 1"
             description="Opção de resposta do aluno."
           />
+          <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.answer1.required">A alternativa 1 é um campo obrigatorio</span>
           <FormQuestionItem
             id="answer2"
             v-model="answer2"
@@ -40,6 +42,7 @@
             title="Alternativa 2"
             description="Opção de resposta do aluno."
           />
+          <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.answer2.required">A alternativa 2 é um campo obrigatorio</span>
           <FormQuestionItem
             id="answer3"
             v-model="answer3"
@@ -47,6 +50,7 @@
             title="Alternativa 3"
             description="Opção de resposta do aluno."
           />
+          <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.answer3.required">A alternativa 3 é um campo obrigatorio</span>
           <FormQuestionItem
             id="answer4"
             v-model="answer4"
@@ -54,6 +58,7 @@
             title="Alternativa 4"
             description="Opção de resposta do aluno."
           />
+          <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.answer4.required">A alternativa 4 é um campo obrigatorio</span>
           <FormQuestionItem
             id="select-correct-answer"
             v-model="correctAnswer"
@@ -61,6 +66,8 @@
             title="Selecione a alternativa correta"
             description="Cada questão deve possuir somente 1 alternativa correta."
           />
+           <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.correctAnswer.required">A alternativa correta é um campo obrigatorio</span>
+            <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.correctAnswer.integer">A alternativa correta precisa ser um inteiro</span>
           <FormQuestionItem
             id="select-country"
             v-model="country_id"
@@ -69,6 +76,7 @@
             title="País"
             description="Informe sobre qual país a questão se refere."
           />
+           <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.country_id.required">O país é um campo obrigatorio</span>
           <FormQuestionItem
             id="select-grade"
             v-model="grade"
@@ -76,6 +84,8 @@
             title="Série"
             description="Informar qual a série escolar que a questão deve ser aplicada."
           />
+           <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.grade.required">A série escolar é um campo obrigatorio</span>
+           <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.grade.integer">A série escolar precisa ser um inteiro</span>
           <div
             class="
               title-form-question
@@ -107,7 +117,13 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
+import Vuelidate from 'vuelidate'
+import { required,integer } from "vuelidate/lib/validators"
+
 import ToastMixin from '~/mixins/toastMixin'
+
+Vue.use(Vuelidate)
 
 export default {
   mixins: [ToastMixin],
@@ -121,6 +137,7 @@ export default {
       correctAnswer: '',
       grade: '',
       country_id: '',
+      submitted : false,
     }
   },
   computed: {
@@ -145,6 +162,18 @@ export default {
   },
   methods: {
     addQuestion() {
+      this.submitted = true;
+
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+            window.scrollTo({
+                top : 0,
+                behavior : "smooth"
+            })
+          return;
+      }
+
+
       this.$store
         .dispatch('question/create', this.$dataPayload)
         .then(() => {
@@ -166,5 +195,16 @@ export default {
         })
     },
   },
+  validations: {
+      answer1:{required},
+      answer2:{required},
+      answer3:{required},
+      answer4:{required},
+      wording:{required},
+      country_id:{required},
+      grade:{required,integer},
+      correctAnswer:{required,integer}
+
+    }
 }
 </script>
