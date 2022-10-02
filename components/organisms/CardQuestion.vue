@@ -16,15 +16,14 @@
           <div class="d-flex justify-content-end col-2">
             <CardButton
               icon="pen-to-square"
-              action="question/update"
-              :params="question.id"
+              @propagateClick="questionForUpdate(question.id)"
             />
             <CardButton
               icon="trash"
-              @propagateClick="$bvModal.show('deleteQuestionModal')"
+              @propagateClick="questionForDestroy(question.id)"
             />
             <b-modal
-              id="deleteQuestionModal"
+              id="modalQuestionDestroy"
               hide-backdrop
               hide-footer
               hide-header-close
@@ -43,13 +42,14 @@
               <div class="d-flex justify-content-end">
                 <div
                   class="btn btn-light m-1"
-                  @click="$bvModal.hide('deleteQuestionModal')"
+                  @click="$bvModal.hide('modalQuestionDestroy')"
                 >
                   Cancelar
                 </div>
                 <div
+                  v-if="questionFor != undefined"
                   class="btn btn-danger m-1"
-                  @click="deleteQuestion(question.id)"
+                  @click="destroyQuestion(questionFor.id)"
                 >
                   Excluir
                 </div>
@@ -117,6 +117,11 @@ export default {
   name: 'CardQuestion',
   mixins: [ToastMixin],
   middleware: 'auth',
+  data() {
+    return {
+      questionFor: ''
+    }
+  },
   computed: {
     $dataQuestions() {
       return this.$store.getters['question/index']
@@ -129,7 +134,20 @@ export default {
     this.$store.dispatch('question/index')
   },
   methods: {
-    deleteQuestion(id) {
+    questionForUpdate(id) {
+      this.$store.dispatch('question/show', id).then(() => {
+        this.questionFor = this.$store.getters['question/show']
+      })
+      // this.navigateTo({ path: `dashboard/questions/details/${id}` })
+      this.$router.push({ path: `questions/details/${id}` });
+    },
+    questionForDestroy(id) {
+      this.$store.dispatch('question/show', id).then(() => {
+        this.questionFor = this.$store.getters['question/show']
+      })
+      this.$bvModal.show('modalQuestionDestroy')
+    },
+    destroyQuestion(id) {
       this.$store
         .dispatch('question/destroy', id)
         .then(() => {
@@ -138,7 +156,7 @@ export default {
             'Tudo Certo!',
             'success'
           )
-          this.$bvModal.hide('deleteQuestionModal')
+          this.$bvModal.hide('modalQuestionDestroy')
         })
         .catch((err) => {
           if (err.response.data) {
