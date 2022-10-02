@@ -9,6 +9,7 @@
 </template>
   <script>
 export default {
+  name: 'DashButtonNew',
   props: {
     route: { type: String, required: true },
   },

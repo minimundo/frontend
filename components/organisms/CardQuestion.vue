@@ -114,6 +114,7 @@
 import ToastMixin from '~/mixins/toastMixin'
 
 export default {
+  name: 'CardQuestion',
   mixins: [ToastMixin],
   middleware: 'auth',
   computed: {
@@ -159,10 +160,6 @@ export default {
 
 li span {
   color: black;
-}
-
-.test-i {
-  color: green;
 }
 
 .btn-details {

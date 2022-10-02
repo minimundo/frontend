@@ -1,20 +1,20 @@
 <template>
-    <div class="nav-item">
-        <nuxt-link :to="to" class="nav-link d-inline-block">
-            {{ text }}
-        </nuxt-link>
-    </div>
+  <div class="nav-item">
+    <nuxt-link :to="to" class="nav-link d-inline-block">
+      {{ text }}
+    </nuxt-link>
+  </div>
 </template>
 <script>
 export default {
-    props: {
-        text: { type: String, required: true },
-        to: { type: String, required: true },
-    }
+  name: 'NavItem',
+  props: {
+    text: { type: String, required: true },
+    to: { type: String, required: true },
+  },
 }
 </script>
 <style scoped>
-
 .nav-link {
   font-weight: 500;
   margin-left: 15px;
@@ -33,5 +33,4 @@ export default {
   margin-top: 0px !important;
   margin-bottom: 0px !important;
 }
-
 </style>

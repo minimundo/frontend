@@ -24,6 +24,7 @@
 </template>
 <script>
 export default {
+  name: 'DashCards',
   computed: {
     $dataQuestionCount() {
       return this.$store.getters['question/indexCount']

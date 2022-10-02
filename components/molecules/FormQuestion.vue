@@ -110,6 +110,7 @@
 import ToastMixin from '~/mixins/toastMixin'
 
 export default {
+  name: 'FormQuestion',
   mixins: [ToastMixin],
   data() {
     return {
