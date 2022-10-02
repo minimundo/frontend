@@ -5,5 +5,9 @@ export default {
 
     STORE(state, payload) {
         state.questions.push(payload)
+    },
+
+    SHOW(state, payload) {
+        state.question = payload
     }
 }

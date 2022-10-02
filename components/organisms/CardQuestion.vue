@@ -8,22 +8,22 @@
       >
         <div class="d-flex justify-content-between">
           <CardItem
+            v-if="question.creator"
             icon="user"
             title="Criador:"
-            content="Nome do Criador da Pergunta"
+            :content="question.creator.firstName"
           />
           <div class="d-flex justify-content-end col-2">
             <CardButton
               icon="pen-to-square"
-              action="question/update"
-              :params="question.id"
+              @propagateClick="questionForUpdate(question.id)"
             />
             <CardButton
               icon="trash"
-              @propagateClick="$bvModal.show('deleteQuestionModal')"
+              @propagateClick="questionForDestroy(question.id)"
             />
             <b-modal
-              id="deleteQuestionModal"
+              id="modalQuestionDestroy"
               hide-backdrop
               hide-footer
               hide-header-close
@@ -42,13 +42,14 @@
               <div class="d-flex justify-content-end">
                 <div
                   class="btn btn-light m-1"
-                  @click="$bvModal.hide('deleteQuestionModal')"
+                  @click="$bvModal.hide('modalQuestionDestroy')"
                 >
                   Cancelar
                 </div>
                 <div
+                  v-if="questionFor != undefined"
                   class="btn btn-danger m-1"
-                  @click="deleteQuestion(question.id)"
+                  @click="destroyQuestion(questionFor.id)"
                 >
                   Excluir
                 </div>
@@ -56,7 +57,12 @@
             </b-modal>
           </div>
         </div>
-        <CardItem icon="flag" title="País:" content="Nome do País" />
+        <CardItem
+          v-if="question.country"
+          icon="flag"
+          title="País:"
+          :content="question.country.name"
+        />
         <ul class="items">
           <CardItem
             icon="newspaper"
@@ -85,6 +91,21 @@
           title="Correta:"
           :content="question.correct_answer.replace('answer', '')"
         />
+        <div
+          class="
+            title-form-question
+            d-flex
+            align-items-center
+            justify-content-center
+            text-center
+          "
+        >
+          <nuxt-link
+            class="btn btn-secondary btn-details"
+            :to="`questions/details/${question.id}`"
+            >Ver Detalhes</nuxt-link
+          >
+        </div>
       </div>
     </Container>
   </div>
@@ -93,10 +114,13 @@
 import ToastMixin from '~/mixins/toastMixin'
 
 export default {
+  name: 'CardQuestion',
   mixins: [ToastMixin],
   middleware: 'auth',
-  async asyncData({ store }) {
-    await store.dispatch('question/index')
+  data() {
+    return {
+      questionFor: ''
+    }
   },
   computed: {
     $dataQuestions() {
@@ -107,10 +131,23 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('country/index')
+    this.$store.dispatch('question/index')
   },
   methods: {
-    deleteQuestion(id) {
+    questionForUpdate(id) {
+      this.$store.dispatch('question/show', id).then(() => {
+        this.questionFor = this.$store.getters['question/show']
+      })
+      // this.navigateTo({ path: `dashboard/questions/details/${id}` })
+      this.$router.push({ path: `questions/details/${id}` });
+    },
+    questionForDestroy(id) {
+      this.$store.dispatch('question/show', id).then(() => {
+        this.questionFor = this.$store.getters['question/show']
+      })
+      this.$bvModal.show('modalQuestionDestroy')
+    },
+    destroyQuestion(id) {
       this.$store
         .dispatch('question/destroy', id)
         .then(() => {
@@ -119,7 +156,7 @@ export default {
             'Tudo Certo!',
             'success'
           )
-          this.$bvModal.hide('deleteQuestionModal')
+          this.$bvModal.hide('modalQuestionDestroy')
         })
         .catch((err) => {
           if (err.response.data) {
@@ -143,7 +180,16 @@ li span {
   color: black;
 }
 
-.test-i {
-  color: green;
+.btn-details {
+  background-color: var(--primary-color);
+}
+
+.btn-details {
+  transition: all 0.3s ease-in-out !important;
+}
+
+.btn-details:hover {
+  transform: translateY(-2px) !important;
+  background-color: var(--primary-color);
 }
 </style>
