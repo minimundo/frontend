@@ -67,7 +67,6 @@
             description="Cada questão deve possuir somente 1 alternativa correta."
           />
            <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.correctAnswer.required">A alternativa correta é um campo obrigatorio</span>
-            <span style="color : red"  class="form-item form-group col-sm-6 col-12" v-if="submitted && !$v.correctAnswer.integer">A alternativa correta precisa ser um inteiro</span>
           <FormQuestionItem
             id="select-country"
             v-model="country_id"
@@ -120,7 +119,6 @@
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
 import { required,integer } from "vuelidate/lib/validators"
-
 import ToastMixin from '~/mixins/toastMixin'
 
 Vue.use(Vuelidate)
@@ -162,14 +160,13 @@ export default {
   },
   methods: {
     addQuestion() {
+      console.log(this.$v.answer1.$error)
       this.submitted = true;
+      console.log("Submit")
 
       this.$v.$touch();
       if (this.$v.$invalid) {
-            window.scrollTo({
-                top : 0,
-                behavior : "smooth"
-            })
+        console.log("Algo errado não está certo")
           return;
       }
 
@@ -201,7 +198,7 @@ export default {
       answer3:{required},
       answer4:{required},
       wording:{required},
-      country_id:{required},
+      country_id:{required,integer},
       grade:{required,integer},
       correctAnswer:{required,integer}
 

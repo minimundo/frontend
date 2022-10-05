@@ -1,5 +1,5 @@
 <template>
-  <div v-if="type != 'button'" class="form-item form-group col-sm-6 col-12">
+  <div v-if="type != 'button'" class="form-item mt col-sm-6 col-12">
     <div v-if="type === 'title'" class="h4 font-weight-bold">
       {{ title }}
       <small class="h6 form-text text-muted font-weight-semibold">
@@ -17,6 +17,7 @@
         v-if="type === 'textarea'"
         id="floatingTextarea"
         class="form-control"
+        :class="classe"
         :placeholder="`Escreva aqui.`"
         value=""
         @input="propagateInput"
@@ -110,6 +111,7 @@
 <script>
 export default {
   props: {
+    classe:{type: String},
     type: { type: String, required: true },
     id: { type: String, required: true },
     title: { type: String, required: true },
@@ -131,6 +133,9 @@ label {
   color: black;
 }
 
+.mt{
+  margin-top: 1.5rem;
+}
 small {
   color: #77838f;
 }
