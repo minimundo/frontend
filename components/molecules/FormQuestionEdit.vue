@@ -14,14 +14,15 @@
           <FormQuestionItem
             id="title-form-question"
             type="title"
-            title="Adicionar Questão"
-            description="Preencha os campos com os dados da nova questão."
+            title="Detalhes da Questão"
+            description="Você pode atualizar os dados da questão, inserindo novas informações nos campos."
           />
         </div>
-        <form ref="formQuestionRegister">
+        <form v-if="question" ref="formQuestionRegister">
           <FormQuestionItem
             id="wording"
             v-model="wording"
+            :value="wording"
             type="textarea"
             title="Enunciado"
             description="Apresenta os detalhes e trás a pergunta a ser respondida."
@@ -92,7 +93,7 @@
                 title="Cancelar"
               />
             </div>
-            <div class="button-save m-1" @click="addQuestion">
+            <div class="button-save m-1" @click="updateQuestion">
               <FormQuestionItem
                 id="button-save"
                 type="button-save"
@@ -106,27 +107,31 @@
     <Container> </Container>
   </div>
 </template>
-<script>
+  <script>
 import ToastMixin from '~/mixins/toastMixin'
 
 export default {
-  name: 'FormQuestion',
+  name: 'FormQuestionEdit',
   mixins: [ToastMixin],
+  props: {
+    question: { type: Object, required: true },
+  },
   data() {
     return {
-      wording: '',
-      answer1: '',
-      answer2: '',
-      answer3: '',
-      answer4: '',
-      correctAnswer: '',
-      grade: '',
-      country_id: '',
+      wording: this.question.wording,
+      answer1: this.question.answer1,
+      answer2: this.question.answer2,
+      answer3: this.question.answer3,
+      answer4: this.question.answer4,
+      correctAnswer: this.question.correct_answer,
+      grade: this.question.grade,
+      country_id: this.question.country.id,
     }
   },
   computed: {
     $dataPayload() {
       return {
+        id: this.question.id,
         grade: this.grade,
         wording: this.wording,
         answer1: this.answer1,
@@ -145,22 +150,21 @@ export default {
     this.$store.dispatch('country/index')
   },
   methods: {
-    addQuestion() {
+    updateQuestion() {
       this.$store
-        .dispatch('question/create', this.$dataPayload)
+        .dispatch('question/update', this.$dataPayload)
         .then(() => {
           this.showToastMixin(
-            'A questão foi cadastrada!',
+            'A questão foi atualizada!',
             'Tudo Certo!',
             'success'
           )
-          this.$refs.formQuestionRegister.reset()
         })
         .catch((err) => {
           if (err.response.data) {
             this.showToastMixin(
               'Algo não ocorreu conforme o esperado.',
-              'Erro ao Excluir!',
+              'Erro ao Atualizar!',
               'danger'
             )
           }
@@ -169,3 +173,4 @@ export default {
   },
 }
 </script>
+  

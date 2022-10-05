@@ -13,14 +13,26 @@
             <DashItem text="Países" to="/dashboard/countries" />
             <DashItem text="Users" to="/dashboard/users" />
           </div>
-          <div v-if="$route.path === '/dashboard/questions' || $route.path === '/dashboard/countries' || $route.path === '/dashboard/users'" class="navbar-nav me-auto mb-2 mb-sm-0">
-            <DashButtonNew :route="$route.path"/>
+          <div
+            v-if="
+              $route.path === '/dashboard/questions' ||
+              $route.path === '/dashboard/countries' ||
+              $route.path === '/dashboard/users'
+            "
+            class="navbar-nav me-auto mb-2 mb-sm-0"
+          >
+            <DashButtonNew :route="$route.path" />
           </div>
         </div>
       </div>
     </Container>
   </nav>
 </template>
+<script>
+export default {
+  name: 'DashBar',
+}
+</script>
 <style scoped>
 #dash-bar {
   width: 100%;
