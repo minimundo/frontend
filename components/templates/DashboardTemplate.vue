@@ -5,7 +5,9 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  name: 'DashboardTemplate',
+}
 </script>
 <style>
 </style>

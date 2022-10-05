@@ -18,8 +18,9 @@
 </template>
 <script>
 export default {
+  name: 'CardButton',
   props: {
-    icon: { type: String, required: true},
+    icon: { type: String, required: true },
   },
   data() {
     return {
@@ -29,8 +30,8 @@ export default {
   methods: {
     propagateClick() {
       this.$emit('propagateClick')
-    }
-  }
+    },
+  },
 }
 </script>
 <style>

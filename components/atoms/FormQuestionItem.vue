@@ -19,7 +19,7 @@
         class="form-control"
         :class="classe"
         :placeholder="`Escreva aqui.`"
-        value=""
+        :value="value"
         @input="propagateInput"
       ></textarea>
     </div>
@@ -45,11 +45,15 @@
       class="form-select btn btn-outline-secondary"
       @input="propagateInput"
     >
-      <option selected disabled></option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
+      <option value="" selected disabled></option>
+      <option
+        v-for="answer in answersList"
+        :key="answer.value"
+        :value="answer.value"
+        :selected="answer.value == value"
+      >
+        {{ answer.text }}
+      </option>
     </select>
     <select
       v-if="type === 'select-grade'"
@@ -57,13 +61,15 @@
       class="form-select btn btn-outline-secondary"
       @input="propagateInput"
     >
-      <option selected disabled></option>
-      <option value="4">4º ano</option>
-      <option value="5">5º ano</option>
-      <option value="6">6º ano</option>
-      <option value="7">7º ano</option>
-      <option value="8">8º ano</option>
-      <option value="9">9º ano</option>
+      <option value="" selected disabled></option>
+      <option
+        v-for="grade in gradeList"
+        :key="grade.value"
+        :value="grade.value"
+        :selected="grade.value === value"
+      >
+        {{ grade.text }}
+      </option>
     </select>
     <select
       v-if="type === 'select-country'"
@@ -71,11 +77,12 @@
       class="form-select btn btn-outline-secondary"
       @input="propagateInput"
     >
-      <option selected disabled></option>
+      <option value="" selected disabled></option>
       <option
         v-for="country in countries"
         :key="country.id"
         :value="country.id"
+        :selected="country.id === value"
       >
         {{ country.name }}
       </option>
@@ -110,22 +117,54 @@
 </template>
 <script>
 export default {
+  name: 'FormQuestionItem',
   props: {
+<<<<<<< HEAD
     classe:{type: String},
     type: { type: String, required: true },
+=======
+    type: { type: [String, Number], required: true },
+    value: { type: [String, Number], default: '' },
+>>>>>>> 51397227e56849fa102eb09ae816d936d582a6d0
     id: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, default: '' },
-    countries: { type: Array,
+    countries: {
+      type: Array,
       default() {
         return []
-      } },
+      },
+    },
+    gradeList: {
+      type: Array,
+      default() {
+        return [
+          { value: 4, text: '4º ano' },
+          { value: 5, text: '5º ano' },
+          { value: 6, text: '6º ano' },
+          { value: 7, text: '7º ano' },
+          { value: 8, text: '8º ano' },
+          { value: 9, text: '9º ano' },
+        ]
+      },
+    },
+    answersList: {
+      type: Array,
+      default() {
+        return [
+          { value: 1, text: '1' },
+          { value: 2, text: '2' },
+          { value: 3, text: '3' },
+          { value: 4, text: '4' },
+        ]
+      },
+    },
   },
   methods: {
     propagateInput(event) {
       this.$emit('input', event.target.value)
     },
-  }
+  },
 }
 </script>
 <style scoped>

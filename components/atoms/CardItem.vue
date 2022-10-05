@@ -10,6 +10,7 @@
 </template>
   <script>
 export default {
+  name: 'CardItem',
   props: {
     icon: { type: String, default: '' },
     title: { type: String, required: true },
