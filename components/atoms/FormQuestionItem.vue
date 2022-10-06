@@ -1,5 +1,5 @@
 <template>
-  <div v-if="type != 'button'" class="form-item form-group col-sm-6 col-12">
+  <div v-if="type != 'button'" class="form-item mt col-sm-6 col-12">
     <div v-if="type === 'title'" class="h4 font-weight-bold">
       {{ title }}
       <small class="h6 form-text text-muted font-weight-semibold">
@@ -17,6 +17,7 @@
         v-if="type === 'textarea'"
         id="floatingTextarea"
         class="form-control"
+        :class="{'is-invalid' : invalid}"
         :placeholder="`Escreva aqui.`"
         :value="value"
         @input="propagateInput"
@@ -43,6 +44,7 @@
       :id="id"
       class="form-select btn btn-outline-secondary"
       @input="propagateInput"
+      :class="{'select-invalid' : invalid}"
     >
       <option value="" selected disabled></option>
       <option
@@ -58,6 +60,7 @@
       v-if="type === 'select-grade'"
       :id="id"
       class="form-select btn btn-outline-secondary"
+      :class="{'select-invalid' : invalid}"
       @input="propagateInput"
     >
       <option value="" selected disabled></option>
@@ -75,6 +78,7 @@
       :id="id"
       class="form-select btn btn-outline-secondary"
       @input="propagateInput"
+      :class="{'select-invalid' : invalid}"
     >
       <option value="" selected disabled></option>
       <option
@@ -119,6 +123,7 @@ export default {
   name: 'FormQuestionItem',
   props: {
     type: { type: [String, Number], required: true },
+    invalid: { type: Boolean, required: false },
     value: { type: [String, Number], default: '' },
     id: { type: String, required: true },
     title: { type: String, required: true },
@@ -166,6 +171,9 @@ label {
   color: black;
 }
 
+.mt{
+  margin-top: 1.5rem;
+}
 small {
   color: #77838f;
 }
@@ -185,5 +193,8 @@ small {
 
 .btn-dark:hover {
   transform: translateY(-2px) !important;
+}
+.select-invalid{
+  border-color : #f00;
 }
 </style>
