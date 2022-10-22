@@ -1,7 +1,9 @@
 <template>
   <div class="card-button">
     <div class="d-inline">
+      <b-tooltip :target="id" variant="secondary">{{ tooltip }}</b-tooltip>
       <button
+        :id="id"
         type="button"
         class="
           btn btn-sm btn-secondary btn-icon
@@ -21,6 +23,8 @@ export default {
   name: 'CardButton',
   props: {
     icon: { type: String, required: true },
+    id: { type: String, required: true },
+    tooltip: { type: String, required: true}
   },
   data() {
     return {

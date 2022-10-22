@@ -15,10 +15,14 @@
           />
           <div class="d-flex justify-content-end col-2">
             <CardButton
+              id="update-question"
+              tooltip="Editar Detalhes da Questão"
               icon="pen-to-square"
               @propagateClick="questionForUpdate(question.id)"
             />
             <CardButton
+              id="delete-question"
+              tooltip="Excluir Questão"
               icon="trash"
               @propagateClick="questionForDestroy(question.id)"
             />
@@ -171,7 +175,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .card-question {
   color: #77838f;
 }

@@ -33,7 +33,7 @@ export default {
   },
 }
 </script>
-  <style>
+  <style scoped>
 .card-item {
   color: #77838f;
 }

@@ -17,7 +17,7 @@
         v-if="type === 'textarea'"
         id="floatingTextarea"
         class="form-control"
-        :class="{'is-invalid' : invalid}"
+        :class="{ 'is-invalid': invalid }"
         :placeholder="`Escreva aqui.`"
         :value="value"
         @input="propagateInput"
@@ -43,8 +43,8 @@
       v-if="type === 'select-correct'"
       :id="id"
       class="form-select btn btn-outline-secondary"
+      :class="{ 'select-invalid': invalid }"
       @input="propagateInput"
-      :class="{'select-invalid' : invalid}"
     >
       <option value="" selected disabled></option>
       <option
@@ -60,7 +60,7 @@
       v-if="type === 'select-grade'"
       :id="id"
       class="form-select btn btn-outline-secondary"
-      :class="{'select-invalid' : invalid}"
+      :class="{ 'select-invalid': invalid }"
       @input="propagateInput"
     >
       <option value="" selected disabled></option>
@@ -77,8 +77,8 @@
       v-if="type === 'select-country'"
       :id="id"
       class="form-select btn btn-outline-secondary"
+      :class="{ 'select-invalid': invalid }"
       @input="propagateInput"
-      :class="{'select-invalid' : invalid}"
     >
       <option value="" selected disabled></option>
       <option
@@ -171,7 +171,7 @@ label {
   color: black;
 }
 
-.mt{
+.mt {
   margin-top: 1.5rem;
 }
 small {
@@ -194,7 +194,7 @@ small {
 .btn-dark:hover {
   transform: translateY(-2px) !important;
 }
-.select-invalid{
-  border-color : #f00;
+.select-invalid {
+  border-color: #f00;
 }
 </style>
