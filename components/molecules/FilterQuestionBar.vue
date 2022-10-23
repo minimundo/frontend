@@ -1,8 +1,9 @@
 <template>
   <Container>
+    <form ref="anyName" @submit.prevent="submitForm">
     <div class="form-row">
       <div class="col-5">
-        <FilterInputWording v-model="wording" />
+        <FilterInputWording v-model="wording" value="wording" />
       </div>
       <div class="col-2">
         <FilterSelectGrade v-model="grade" />
@@ -18,6 +19,7 @@
           >Limpar Filtros</b-tooltip
         >
         <button
+          type="submit"
           id="clear-filters"
           class="col btn btn-light"
           title="Limpar Filtros"
@@ -27,6 +29,7 @@
         </button>
       </div>
     </div>
+    </form>
   </Container>
 </template>
 
@@ -59,6 +62,9 @@ export default {
     },
   },
   methods: {
+     submitForm(){
+         this.$refs.anyName.reset();
+      },
     addFilter() {
       this.$store
         .dispatch('question/search', this.$dataPayload)
