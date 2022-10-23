@@ -2,7 +2,7 @@
   <div class="card-item py-2">
     <i
       v-if="icon"
-      class="fas fa-lg"
+      class="icon-item fas fa-lg"
       :class="[$isCheckIcon ? 'check-icon' : '', iconClass]"
     ></i
     ><span> {{ title }}</span> {{ content }}
@@ -14,7 +14,7 @@ export default {
   props: {
     icon: { type: String, default: '' },
     title: { type: String, required: true },
-    content: { type: String, required: true },
+    content: { type: [String, Number], required: true },
   },
   data() {
     return {
@@ -36,6 +36,10 @@ export default {
   <style scoped>
 .card-item {
   color: #77838f;
+}
+
+.icon-item {
+  color: var(--primary-color);
 }
 
 .card-item span {
