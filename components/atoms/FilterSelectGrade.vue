@@ -2,7 +2,7 @@
   <div class="filter-select-grade">
     <select
       id="filter-grade"
-      class="form-select btn btn-outline-secondary custom-select"
+      class="form-select btn btn-outline-light custom-select"
       @input="propagateInput"
     >
       <option value="" selected disabled>Serie</option>
