@@ -8,6 +8,7 @@ export default {
     async search(context, payload) {
         return await this.$axios.$get('/questions', { params: payload }).then((response) => {
             context.commit('INDEX', response)
+            return response
         })
     },
 
