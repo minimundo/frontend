@@ -1,6 +1,6 @@
 <template>
   <div class="card-question">
-    <Container v-if="$dataQuestions">
+    <Container v-if="$dataQuestions.length > 0">
       <div
         v-for="question in $dataQuestions"
         :key="question.id"
@@ -15,11 +15,17 @@
           />
           <div class="d-flex justify-content-end col-2">
             <CardButton
+              id="update-question"
+              tooltip="Editar Detalhes da Questão"
               icon="pen-to-square"
+              variant="secondary"
               @propagateClick="questionForUpdate(question.id)"
             />
             <CardButton
+              id="delete-question"
+              tooltip="Excluir Questão"
               icon="trash"
+              variant="danger"
               @propagateClick="questionForDestroy(question.id)"
             />
             <b-modal
@@ -63,6 +69,12 @@
           title="País:"
           :content="question.country.name"
         />
+        <CardItem
+          v-if="question.grade"
+          icon="graduation-cap"
+          title="Série:"
+          :content="question.grade"
+        />
         <ul class="items">
           <CardItem
             icon="newspaper"
@@ -88,7 +100,7 @@
         <CardItem
           v-if="typeof question.correct_answer != 'undefined' || ''"
           icon="check"
-          title="Correta:"
+          title="Resposta Correta:"
           :content="question.correct_answer.replace('answer', '')"
         />
         <div
@@ -108,6 +120,12 @@
         </div>
       </div>
     </Container>
+    <Container v-else>
+      <div class="text-center m-3 p-4 border">
+        <div><img src="~/assets/images/search-data.svg" width="128" class="d-inline-block" /></div>
+        <div class="text-light" >Nenhuma questão a ser exibida</div>
+      </div>
+    </Container>
   </div>
 </template>
 <script>
@@ -119,11 +137,12 @@ export default {
   middleware: 'auth',
   data() {
     return {
-      questionFor: ''
+      questionFor: '',
     }
   },
   computed: {
     $dataQuestions() {
+      console.log(this.$store.getters['question/index'].length)
       return this.$store.getters['question/index']
     },
     $dataCountries() {
@@ -139,7 +158,7 @@ export default {
         this.questionFor = this.$store.getters['question/show']
       })
       // this.navigateTo({ path: `dashboard/questions/details/${id}` })
-      this.$router.push({ path: `questions/details/${id}` });
+      this.$router.push({ path: `questions/details/${id}` })
     },
     questionForDestroy(id) {
       this.$store.dispatch('question/show', id).then(() => {
@@ -171,7 +190,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .card-question {
   color: #77838f;
 }
@@ -182,6 +201,10 @@ li span {
 
 .btn-details {
   background-color: var(--primary-color);
+}
+
+.search-data {
+  width: 20%;
 }
 
 .btn-details {
