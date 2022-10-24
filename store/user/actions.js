@@ -5,6 +5,14 @@ export default {
         })
     },
 
+    logout(context) {
+        return this.$axios.$delete('/auth').then(() => {
+            this.$auth.logout().then(() => {
+                this.$router.push('/login')
+            })
+        })
+    },
+
     removeUser(context, id) {
         const userToken = this.$auth.strategy.$auth.$storage._state["_token.local"]
         return this.$axios({

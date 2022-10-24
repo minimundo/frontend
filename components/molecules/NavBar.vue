@@ -91,15 +91,12 @@ export default {
       this.$emit('modifyTypeUser')
     },
     logout() {
-      this.$axios.delete('/auth').then(() => {
-        this.$auth.logout().then(() => {
-          this.$router.push('/login')
-          this.showToastMixin(
-            'Logout realizado com sucesso.',
-            'Até Logo!',
-            'success'
-          )
-        })
+      this.$store.dispatch('user/logout').then(() => {
+        this.showToastMixin(
+          'Logout realizado com sucesso.',
+          'Até Logo!',
+          'success'
+        )
       })
     },
   },
