@@ -11,7 +11,7 @@
             <DashItem text="Dashboard" to="/dashboard" />
             <DashItem text="Questões" to="/dashboard/questions" />
             <DashItem text="Países" to="/dashboard/countries" />
-            <DashItem text="Users" to="/dashboard/users" />
+            <DashItem text="Usuários" to="/dashboard/users" />
           </div>
           <div
             v-if="
