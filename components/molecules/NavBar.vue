@@ -18,7 +18,7 @@
         />
       </a>
       <b-navbar-brand href="#">Mini Mundo</b-navbar-brand>
-      
+
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
@@ -34,15 +34,19 @@
             class="m-2"
             variant="primary"
           >
-              <b-dropdown-form>
-                <ValidationObserver ref="form" tag="div" class="vee-validation-field">
-                  <b-form-group
-                    label="Email"
-                    label-for="dropdown-form-email"
-                    @submit.stop.prevent
-                  >
+            <b-dropdown-form>
+              <ValidationObserver
+                ref="form"
+                tag="div"
+                class="vee-validation-field"
+              >
+                <b-form-group
+                  label="Email"
+                  label-for="dropdown-form-email"
+                  @submit.stop.prevent
+                >
                   <ValidationProvider
-                    v-slot="{ errors, classes}"
+                    v-slot="{ errors, classes }"
                     tag="div"
                     rules="required|email"
                   >
@@ -53,30 +57,45 @@
                       size="sm"
                       placeholder="email@example.com"
                     ></b-form-input>
-                    <span class="error-validation mt-2 ml-2">{{ errors[0] }}</span>
+                    <span class="error-validation mt-2 ml-2">{{
+                      errors[0]
+                    }}</span>
                   </ValidationProvider>
-                  </b-form-group>
+                </b-form-group>
 
-                  <b-form-group label="Senha" label-for="dropdown-form-password">
-                    <ValidationProvider v-slot="{ errors, classes }" tag="div" rules="required">
-                      <b-form-input
-                        id="dropdown-form-password"
-                        v-model="credentials.password"
-                        :class="classes"
-                        type="password"
-                        size="sm"
-                        placeholder="Password"
-                      ></b-form-input>
-                      <span class="error-validation mt-2 ml-2">{{ errors[0] }}</span>
-                    </ValidationProvider>
-                  </b-form-group>
-                </ValidationObserver>
-                <b-button id="form-submit" variant="primary" size="sm" @click="login()"
-                  >Entrar</b-button
-                >
-                <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-text>Faça login com as suas credenciais de Professor</b-dropdown-text>
-              </b-dropdown-form>
+                <b-form-group label="Senha" label-for="dropdown-form-password">
+                  <ValidationProvider
+                    v-slot="{ errors, classes }"
+                    tag="div"
+                    rules="required"
+                  >
+                    <b-form-input
+                      id="dropdown-form-password"
+                      v-model="credentials.password"
+                      :class="classes"
+                      type="password"
+                      size="am"
+                      placeholder="Password"
+                    ></b-form-input>
+                    <span class="error-validation mt-2 ml-2">{{
+                      errors[0]
+                    }}</span>
+                  </ValidationProvider>
+                </b-form-group>
+              </ValidationObserver>
+              <b-button
+                id="form-submit"
+                variant="primary"
+                size="sm"
+                @click="login()"
+                >Entrar</b-button
+              >
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-text style="width: 240px;"
+                >Insira suas credenciais de
+                Professor <i class="fa-solid fa-circle-info"></i> </b-dropdown-text
+              > 
+            </b-dropdown-form>
           </b-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -166,11 +185,6 @@ export default {
       },
     }
   },
-  computed: {
-    user() {
-      return this.$auth.$storage.getUniversal('user');
-    }
-  },
   methods: {
     login() {
       this.$auth
@@ -179,8 +193,17 @@ export default {
           this.showToastMixin('Seja Bem vindo!', 'Sucesso', 'success')
         })
         .catch((err) => {
-          if (err.response.data.errors[0].message === "E_INVALID_AUTH_PASSWORD: Password mis-match") {
-            this.showToastMixin('Verifique suas credenciais!', 'Erro no Login', 'warning')
+          if (
+            err.response.data.errors[0].message ===
+              'E_INVALID_AUTH_PASSWORD: Password mis-match' ||
+            err.response.data.errors[0].message ===
+              'E_INVALID_AUTH_UID: User not found'
+          ) {
+            this.showToastMixin(
+              'Verifique suas credenciais!',
+              'Erro no Login',
+              'warning'
+            )
           }
         })
     },
