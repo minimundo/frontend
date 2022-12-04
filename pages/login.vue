@@ -6,12 +6,6 @@
       variant="teacher"
       @modifyTypeUser="student()"
     />
-    <BaseNavbar
-      v-else-if="userAccount.type == 'student'"
-      variant="student"
-      @modifyTypeUser="teacher()"
-    />
-
     <main
       class="
         d-flex
@@ -36,7 +30,7 @@
             <span>Seja Bem Vindo,</span>
           </h2>
           <h2
-            v-if="userAccount.type == null"
+            v-if="userAccount.type == null || userAccount.type == 'student'"
             id="minimundo"
             class="mr-md-5 mt-0 mb-5"
           >
@@ -48,13 +42,6 @@
             class="mr-md-5 mt-0 mb-5"
           >
             Professor(a)!
-          </h2>
-          <h2
-            v-else-if="userAccount.type == 'student'"
-            id="teacher-title"
-            class="mr-md-5 mt-0 mb-5"
-          >
-            Aluno(a)!
           </h2>
         </div>
         <div
@@ -68,7 +55,7 @@
           "
         >
           <div class="choice-options" @click="teacher()">Sou Professor</div>
-          <div class="choice-options" @click="student()">Sou Aluno</div>
+          <a class="choice-options" href="quiz/select">Sou Aluno</a>
         </div>
         <form
           v-else-if="userAccount.type == 'teacher'"
@@ -78,7 +65,7 @@
           <p>Faça login com as suas credenciais.</p>
           <ValidationObserver ref="form" tag="div" class="vee-validation-field">
             <ValidationProvider
-              v-slot="{ errors, classes}"
+              v-slot="{ errors, classes }"
               tag="div"
               rules="required|email"
             >
@@ -92,7 +79,11 @@
               />
               <span class="error-validation mt-2 ml-2">{{ errors[0] }}</span>
             </ValidationProvider>
-            <ValidationProvider v-slot="{ errors, classes }" tag="div" rules="required">
+            <ValidationProvider
+              v-slot="{ errors, classes }"
+              tag="div"
+              rules="required"
+            >
               <input
                 id="password"
                 v-model="credentials.password"
@@ -105,29 +96,6 @@
             </ValidationProvider>
           </ValidationObserver>
           <div id="form-submit" @click="submit()">Entrar</div>
-        </form>
-        <form
-          v-else-if="userAccount.type == 'student'"
-          id="form-teacher"
-          class="d-flex flex-column align-items-center align-items-md-start"
-        >
-          <p id="support-text">
-            Escolha a série, o continente e o país para começar a responder as
-            perguntas.
-          </p>
-          <input
-            id="grade"
-            name="grade"
-            type="number"
-            placeholder="Informe sua série"
-          />
-          <input
-            id="country"
-            name="country"
-            type="text"
-            placeholder="Escolha o continente"
-          />
-          <div id="form-submit">Comece a responder!</div>
         </form>
       </aside>
       <article>
@@ -149,8 +117,8 @@ export default {
   name: 'LoginPage',
   components: { BaseNavbar },
   mixins: [ToastMixin],
-  middleware: 'auth', 
-  auth : 'guest',
+  middleware: 'auth',
+  auth: 'guest',
   data() {
     return {
       credentials: {
@@ -176,8 +144,17 @@ export default {
           this.showToastMixin('Seja Bem vindo!', 'Sucesso', 'success')
         })
         .catch((err) => {
-          if (err.response.data === "Invalid credentials") {
-            this.showToastMixin('Verifique suas credenciais!', 'Erro no Login', 'warning')
+          if (
+            err.response.data.errors[0].message ===
+              'E_INVALID_AUTH_PASSWORD: Password mis-match' ||
+            err.response.data.errors[0].message ===
+              'E_INVALID_AUTH_UID: User not found'
+          ) {
+            this.showToastMixin(
+              'Verifique suas credenciais!',
+              'Erro no Login',
+              'warning'
+            )
           }
         })
     },
@@ -305,7 +282,7 @@ input {
   width: 90%;
   padding: 15px;
   border-radius: 20px;
-  border: .0625rem solid var(--primary-background);
+  border: 0.0625rem solid var(--primary-background);
   box-sizing: content-box;
   font-size: 15px;
 }
