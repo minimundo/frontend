@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="back">
     <Container>
       <div class="quiz-select-country">
         {{ $testApi }}
-        <h1>Prepare-se para o teste!</h1>
         <div class="space-bottom-1 p-5 card">
           <div class="card-body">
+            <div class="row justify-content-center mb-10">
+              <h1 class="card-title text-dark">Teste suas habilidades?</h1>
+            </div>
             <form>
               <div class="row align-items-center">
                 <div class="col-sm-3"></div>
@@ -62,12 +64,25 @@
                     <label class="form-label text-dark" for="title">
                       Série:
                       <span class="text-danger"> * </span> </label
-                    ><FilterSelectGrade v-model="grade" /><small
+                    ><FilterSelectGrade v-model="grade" />
+                    <small
                       class="form-text text-muted"
                       >Informe a série (ex: 7º ano)</small
                     >
                   </div>
                 </div>
+                 <div class="row">
+                    <div class="form-group col-sm-6 col-12">
+                      <label class="form-label text-dark" for="title">
+                      Continente:
+                      <span class="text-danger"> * </span> </label>
+                      <QuizSelectContinent v-model="continent"/>
+                      <small
+                      class="form-text text-muted"
+                      >Informe o continente (ex: América)</small
+                    >
+                    </div>
+                  </div>
                 <div class="mt-5 row">
                   <div class="text-right col">
                     <button
@@ -105,6 +120,7 @@ export default {
   data() {
     return {
       grade: '',
+      continent: '',
       countries: [
         { name: 'América', href: 'america' },
         { name: 'Europa', href: 'europa' },
@@ -120,6 +136,7 @@ export default {
 <style scoped>
 * {
   text-decoration: none;
+  
 }
 
 .icon-header {
