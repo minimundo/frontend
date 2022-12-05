@@ -102,6 +102,7 @@
   <script>
 export default {
   name: 'QuizSelectCountry',
+  layout: 'Header',
   data() {
     return {
       grade: '',
