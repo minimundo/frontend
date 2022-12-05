@@ -1,13 +1,11 @@
 <template>
     <div>
-      <Header />
-      <DashBar />
+      <HeaderTemplate />
+      <Nuxt />
     </div>
   </template>
   <script>
-  export default {
-    name: 'DashboardTemplate',
-  }
+  export default {}
   </script>
   <style>
   </style>
