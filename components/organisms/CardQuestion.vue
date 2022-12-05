@@ -121,9 +121,9 @@
       </div>
     </Container>
     <Container v-else>
-      <div class="text-center m-3 p-4 border">
+      <div class="text-center mt-5 p-5">
         <div><img src="~/assets/images/search-data.svg" width="128" class="d-inline-block" /></div>
-        <div class="text-light" >Nenhuma questão a ser exibida</div>
+        <div class="text-light not-has-question" >Nenhuma questão a ser exibida</div>
       </div>
     </Container>
   </div>
@@ -205,6 +205,10 @@ li span {
 
 .search-data {
   width: 20%;
+}
+
+.not-has-question {
+  font-size: 1.2rem;
 }
 
 .btn-details {

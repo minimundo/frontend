@@ -58,9 +58,8 @@
             v-if="variant === 'teacher'"
             id="student"
             class="nav-item modify-type-user"
-            @click="onClick()"
           >
-            <a href="#" class="nav-link d-inline-block">Sou Aluno</a>
+            <a href="quiz/select" class="nav-link d-inline-block">Sou Aluno</a>
           </li>
         </ul>
         <ul

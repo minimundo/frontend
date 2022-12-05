@@ -58,20 +58,27 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'https://api-minimundo.herokuapp.com/api',
+    baseURL: 'https://api.minimundo.online/api',
   },
 
   auth: {
     strategies: {
       local: {
+        token: {
+          property: 'token',
+          global: true,
+        },
         endpoints: {
           login: {
             url: 'auth',
             method: 'post',
-            propertyName: 'token',
           },
           logout: false,
-          user: false,
+          user: {
+            url: 'users/me',
+            method: 'get',
+            propertyName: false,
+          },
         },
       },
     },
