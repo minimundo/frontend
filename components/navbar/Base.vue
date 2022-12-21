@@ -59,7 +59,7 @@
             id="student"
             class="nav-item modify-type-user"
           >
-            <a href="quiz/select" class="nav-link d-inline-block">Sou Aluno</a>
+            <a href="quiz/intro" class="nav-link d-inline-block">Sou Aluno</a>
           </li>
         </ul>
         <ul

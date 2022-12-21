@@ -55,7 +55,7 @@
           "
         >
           <div class="choice-options" @click="teacher()">Sou Professor</div>
-          <a class="choice-options" href="quiz/select">Sou Aluno</a>
+          <a class="choice-options" href="quiz/intro">Sou Aluno</a>
         </div>
         <form
           v-else-if="userAccount.type == 'teacher'"

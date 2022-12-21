@@ -142,7 +142,6 @@ export default {
   },
   computed: {
     $dataQuestions() {
-      console.log(this.$store.getters['question/index'].length)
       return this.$store.getters['question/index']
     },
     $dataCountries() {
@@ -157,7 +156,6 @@ export default {
       this.$store.dispatch('question/show', id).then(() => {
         this.questionFor = this.$store.getters['question/show']
       })
-      // this.navigateTo({ path: `dashboard/questions/details/${id}` })
       this.$router.push({ path: `questions/details/${id}` })
     },
     questionForDestroy(id) {
