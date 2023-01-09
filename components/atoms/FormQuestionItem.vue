@@ -31,6 +31,7 @@
         type != 'select-grade' &&
         type != 'select-country' &&
         type != 'button-cancel' &&
+        type != 'file-media' &&
         type != 'button-save'
       "
       :id="id"
@@ -39,6 +40,14 @@
       value=""
       @input="propagateInput"
     />
+    <b-form-file
+      v-if="type === 'file-media'"
+      :id="id"
+      placeholder="Selecione um arquivo, ou arraste e solte aqui."
+      drop-placeholder="Solte o arquivo aqui."
+      accept=".jpg, .png, .webp"
+      @input="propagateFile"
+    ></b-form-file>
     <select
       v-if="type === 'select-correct'"
       :id="id"
@@ -162,6 +171,9 @@ export default {
   methods: {
     propagateInput(event) {
       this.$emit('input', event.target.value)
+    },
+    propagateFile(event) {
+      this.$emit('input', event)
     },
   },
 }

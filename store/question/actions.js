@@ -23,7 +23,13 @@ export default {
             grade: payload.grade,
             country_id: payload.country_id
         }).then((response) => {
+            console.log(response);
             context.commit('STORE', response);
+            if(payload.media != null) {
+                const formData = new FormData()
+                formData.append('file', payload.media)
+                this.$axios.post(`/questions/${response.data.id}/media`, formData)
+            }
         })
     },
 

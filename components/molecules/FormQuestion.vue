@@ -31,7 +31,7 @@
             v-if="submitted && !$v.wording.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >O enunciado é um campo obrigatorio</span
+            >O enunciado é um campo obrigatório</span
           >
           <FormQuestionItem
             id="answer1"
@@ -45,7 +45,7 @@
             v-if="submitted && !$v.answer1.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >A alternativa 1 é um campo obrigatorio</span
+            >A alternativa 1 é um campo obrigatório</span
           >
           <FormQuestionItem
             id="answer2"
@@ -59,7 +59,7 @@
             v-if="submitted && !$v.answer2.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >A alternativa 2 é um campo obrigatorio</span
+            >A alternativa 2 é um campo obrigatório</span
           >
           <FormQuestionItem
             id="answer3"
@@ -73,7 +73,7 @@
             v-if="submitted && !$v.answer3.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >A alternativa 3 é um campo obrigatorio</span
+            >A alternativa 3 é um campo obrigatório</span
           >
           <FormQuestionItem
             id="answer4"
@@ -87,7 +87,7 @@
             v-if="submitted && !$v.answer4.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >A alternativa 4 é um campo obrigatorio</span
+            >A alternativa 4 é um campo obrigatório</span
           >
           <FormQuestionItem
             id="select-correct-answer"
@@ -101,7 +101,7 @@
             v-if="submitted && !$v.correctAnswer.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >A alternativa correta é um campo obrigatorio</span
+            >A alternativa correta é um campo obrigatório</span
           >
           <span
             v-if="submitted && !$v.correctAnswer.integer"
@@ -122,7 +122,7 @@
             v-if="submitted && !$v.country_id.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >O país é um campo obrigatorio</span
+            >O país é um campo obrigatório</span
           >
           <FormQuestionItem
             id="select-grade"
@@ -136,7 +136,7 @@
             v-if="submitted && !$v.grade.required"
             style="color: red"
             class="form-item col-sm-6 col-12"
-            >A série escolar é um campo obrigatorio</span
+            >A série escolar é um campo obrigatório</span
           >
           <span
             v-if="submitted && !$v.grade.integer"
@@ -144,6 +144,14 @@
             class="form-item col-sm-6 col-12"
             >A série escolar precisa ser um inteiro</span
           >
+          <FormQuestionItem
+            id="file-media"
+            v-model="media"
+            type="file-media"
+            title="Mídia"
+            :invalid="!$v.grade.required && submitted"
+            description="Uma imagem pode ser adicionada para complementar a questão."
+          />
           <div
             class="
               title-form-question
@@ -196,6 +204,7 @@ export default {
       correctAnswer: '',
       grade: '',
       country_id: '',
+      media: null,
       submitted: false,
     }
   },
@@ -210,6 +219,7 @@ export default {
         answer4: this.answer4,
         correct_answer: this.correctAnswer,
         country_id: this.country_id,
+        media: this.media,
       }
     },
     $countriesPayload() {
@@ -261,3 +271,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.mt {
+  margin-top: 1.5rem;
+}
+</style>
