@@ -75,6 +75,12 @@
           title="Série:"
           :content="question.grade"
         />
+        <CardItem
+          v-if="question.media != null"
+          icon="image"
+          title="Mídia:"
+          :content="question.media.url"
+        />
         <ul class="items">
           <CardItem
             icon="newspaper"
