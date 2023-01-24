@@ -55,7 +55,7 @@
           "
         >
           <div class="choice-options" @click="teacher()">Sou Professor</div>
-          <a class="choice-options" href="quiz/intro">Sou Aluno</a>
+          <nuxt-link class="choice-options" to="/quiz/intro">Sou Aluno</nuxt-link>
         </div>
         <form
           v-else-if="userAccount.type == 'teacher'"
