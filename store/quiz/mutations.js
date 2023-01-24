@@ -1,5 +1,5 @@
 export default {
     INDEX(state, payload) {
-        state.intro = payload
-    }
+        payload.country ? state.intro.country = payload.country : state.intro.grade = payload.grade
+    },    
 }

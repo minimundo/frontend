@@ -1,3 +1,7 @@
 export default () => ({
-    intro: []
+    intro: {
+        grade: '',
+        country: '',
+    },
+    questionsQuizSection: {}
 })
