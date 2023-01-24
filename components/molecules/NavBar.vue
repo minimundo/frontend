@@ -131,7 +131,8 @@
             <!-- Using 'button-content' slot -->
             <template #button-content>
               <em class="username">{{ $auth.user.firstName }}</em>
-              <i class="text-light fa-regular fa-user"></i>
+              <b-avatar v-if="!$auth.user.avatar" size="sm" variant="primary"></b-avatar>
+              <b-avatar v-if="$auth.user.avatar" size="sm" :src="$auth.user.avatar.url"></b-avatar>
             </template>
             <b-dropdown-item href="#">Conta</b-dropdown-item>
             <b-dropdown-item href="#">Central de Ajuda</b-dropdown-item>
