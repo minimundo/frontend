@@ -4,6 +4,9 @@ const getters = {
   },
   questions: (state) => {
     return state.questions;
+  },
+  result: (state) => {
+    return state.playerResult;
   }
 }
 

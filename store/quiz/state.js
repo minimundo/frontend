@@ -4,5 +4,6 @@ export default () => ({
         country: '',
     },
     questions: [],
-    playerAnswer: []
+    playerAnswer: [],
+    playerResult: {}
 })
