@@ -8,7 +8,7 @@
         Voltar
       </button>
       <nuxt-link 
-        to="/quiz/students"
+        to="/quiz/game"
         class="transition-3d-hover btn btn-primary btn-sm"
       >
         Iniciar

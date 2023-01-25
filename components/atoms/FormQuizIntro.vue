@@ -17,22 +17,25 @@
           <div class="row">
             <div class="form-group col-sm-6 col-12">
               <label class="form-label text-dark" for="title">
-                Série:
+                <strong>Série:</strong>
                 <span class="text-danger"> * </span> </label
-              ><FilterSelectGrade v-model="grade" @input="$store.dispatch('quiz/index', {grade: grade})"/>
+              ><FilterSelectGrade
+                v-model="grade"
+                @input="$store.dispatch('quiz/index', { grade: grade })"
+              />
               <small class="form-text text-muted"
-                >Informe a série (ex: 7º ano)</small
+                >Selecione a série (ex: 7º ano)</small
               >
             </div>
           </div>
           <div class="row">
             <div class="form-group col-sm-6 col-12">
               <label class="form-label text-dark" for="title">
-                País:
+                <strong>País:</strong>
                 <span class="text-danger"> * </span>
               </label>
               <small class="form-text text-muted"
-                >Informe o país alvo das perguntas do quiz (ex: Brasil)</small
+                >Selecione o país alvo das perguntas do quiz (ex: Brasil)</small
               >
             </div>
           </div>
@@ -50,25 +53,42 @@
               "
             >
               <label class="form-label text-dark text-center" for="title">
-                {{ countries.text }}
+                <strong> {{ countries.text }}</strong>
               </label>
               <div class="container">
                 <div class="radio-tile-group">
-                  <div v-for="country in countries.values" :key="country.name" class="input-container">
-                    <input :id="country.name" type="radio" name="radio" @click="$store.dispatch('quiz/index', {country: country.name})"/>
+                  <div
+                    v-for="country in countries.values"
+                    :key="country.name"
+                    class="input-container"
+                  >
+                    <input
+                      :id="country.id"
+                      type="radio"
+                      name="radio"
+                      @click="
+                        $store.dispatch('quiz/index', { country: country })
+                      "
+                    />
                     <div class="radio-tile">
-                        <b-img v-if="country.flag != null" thumbnail fluid :src="country.flag.url" alt="Image 1"></b-img>
+                      <b-img
+                        v-if="country.flag != null"
+                        thumbnail
+                        fluid
+                        :src="country.flag.url"
+                        alt="Image 1"
+                      ></b-img>
                       <label>{{ country.name }}</label>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
-</form>
-</div>
+      </div>
+    </form>
+  </div>
 </template>
 <script>
 export default {
@@ -86,7 +106,8 @@ export default {
       const countriesList = {}
 
       countriesList.northAmerica = this.$store.getters['country/northAmerica']
-      countriesList.centralAmerica = this.$store.getters['country/centralAmerica']
+      countriesList.centralAmerica =
+        this.$store.getters['country/centralAmerica']
       countriesList.southAmerica = this.$store.getters['country/southAmerica']
       countriesList.europe = this.$store.getters['country/europe']
       countriesList.africa = this.$store.getters['country/africa']
@@ -113,7 +134,7 @@ export default {
 }
 </script>
 <style scoped>
-  .container {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,36 +171,36 @@ export default {
   text-align: center;
   justify-content: center;
   height: 100%;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--second-color);
   border-radius: 8px;
   transition: all 300ms ease;
 }
 
 .input-container ion-icon {
-  color: var(--primary-color);
+  color: var(--second-color);
   font-size: 3rem;
 }
 
 .input-container label {
-  color: var(--primary-color);
-  font-size: 0.80rem;
+  color: var(--second-color);
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-input:checked+.radio-tile {
-  background-color: var(--primary-color);
-  box-shadow: 0 0 12px var(--primary-color);
+input:checked + .radio-tile {
+  background-color: var(--second-color);
+  box-shadow: 0 0 12px var(--second-color);
   transform: scale(1.1);
 }
 
-input:hover+.radio-tile {
-  box-shadow: 0 0 12px var(--primary-color);
+input:hover + .radio-tile {
+  box-shadow: 0 0 12px var(--second-color);
 }
 
-input:checked+.radio-tile ion-icon,
-input:checked+.radio-tile label {
+input:checked + .radio-tile ion-icon,
+input:checked + .radio-tile label {
   color: white;
 }
 </style>
