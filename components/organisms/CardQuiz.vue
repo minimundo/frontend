@@ -23,6 +23,9 @@
               >
             </div>
           </div>
+          <div v-if="$questionsQuiz[currentQuestion]" class="bg-white text-center">
+            <b-img v-if="$questionsQuiz[currentQuestion].media != null" thumbnail fluid :src="$questionsQuiz[currentQuestion].media.url" alt="Imagem complementar da questão"></b-img>
+          </div>
           <div
             class="
               d-flex
