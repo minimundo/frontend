@@ -3,5 +3,6 @@ export default () => ({
         grade: '',
         country: '',
     },
-    questionsQuizSection: {}
+    questions: [],
+    playerAnswer: []
 })
