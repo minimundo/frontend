@@ -2,14 +2,14 @@
   <div class="mt-5 row">
     <div class="text-right col mb-2 mr-2">
       <button
-        class="transition-3d-hover btn btn-soft-primary btn-sm"
+        class="transition-3d-hover btn btn-soft-primary btn"
         @click="$router.push('/login')"
       >
         Voltar
       </button>
       <nuxt-link 
         to="/quiz/game"
-        class="transition-3d-hover btn btn-primary btn-sm"
+        class="transition-3d-hover btn btn-primary btn"
       >
         Iniciar
       </nuxt-link>
